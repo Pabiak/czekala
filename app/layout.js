@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Wojciech Czekała",
-  description: "Strona internetowa prof. Wojciech Czekały - wykładowcy, konsultanta, naukowaca",
+  description: "Strona internetowa prof. Wojciech Czekały - wykładowcy, konsultanta, naukowca",
 };
 
 export default function RootLayout({ children }) {

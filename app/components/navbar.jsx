@@ -34,7 +34,7 @@ const Navbar = () => {
                     key={path}
                     className={
                         gradient
-                            ? 'px-4 mx-4 min-w-fit relative text-black cursor-pointer h-7 flex items-center bg-gradient-to-r from-accent to-primary rounded-tl-lg rounded-br-lg font-poppins'
+                            ? 'px-4 mx-4 min-w-fit relative text-black cursor-pointer h-7 flex items-center bg-gradient-to-r from-accent to-primary rounded-tl-2xl rounded-br-2xl font-poppins'
                             : 'py-2 px-4 mx-4 min-w-fit relative text-black cursor-pointer font-poppins after:content-[""] after:w-0 after:h-1 after:bg-gradient-to-r from-accent to-primary after:rounded-tl-lg after:rounded-br-lg after:absolute after:bottom-0 after:right-0 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:left-0'
                     }
                 >
@@ -62,7 +62,7 @@ const Navbar = () => {
                     onClick={() => setNavActive(true)}
                 />
             )}
-            <ul className={`z-20 flex flex-col items-center justify-center gap-y-6 min-h-screen fixed top-14 w-full -right-full text-2xl bg-background transition-all duration-500 ease-in-out ${navActive ? 'right-0' : ''} lg:flex-row lg:items-center lg:p-0 lg:w-fit lg:min-h-fit lg:static lg:text-base`}>{renderMenu()}</ul>
+            <ul className={`z-20 flex flex-col items-center justify-center gap-y-6 min-h-screen fixed top-14 w-full -right-full text-2xl bg-background transition-all duration-500 ease-in-out ${navActive ? 'right-0' : ''} md:text-3xl lg:flex-row lg:items-center lg:p-0 lg:w-fit lg:min-h-fit lg:static lg:text-base`}>{renderMenu()}</ul>
     </nav>
   )
 }
