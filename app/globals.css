@@ -24,6 +24,8 @@
 
 html {
     font-family: 'Inter', sans-serif;
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
 }
 
 @layer utilities {

@@ -4,6 +4,8 @@ import { Link } from 'next/link';
 import { useState } from 'react';
 import { HiMenuAlt3, HiX } from 'react-icons/hi';
 
+import { useDisableBodyScroll } from '../hooks/useDisableBodyScroll';
+
 const Navbar = () => {
     const [ navActive, setNavActive ] = useState(false);
     const mockNavData = [
@@ -13,38 +15,39 @@ const Navbar = () => {
             gradient: true,
         },
         {
-            path: '/o-mnie',
+            path: '#o-mnie',
             label: 'O mnie',
         },
         {
-            path: '/uslugi',
-            label: 'Usługi',
+            path: '#ekoslownik',
+            label: 'Ekosłownik',
         },
         {
-            path: '/kontakt',
+            path: '#kontakt',
             label: 'Kontakt',
         },
     ];
-
+    
     const renderMenu = () => {
         return mockNavData.map((item) => {
             const { path, label, gradient } = item;
             return (
-                <li
-                    key={path}
-                    className={
-                        gradient
-                            ? 'px-4 mx-4 min-w-fit relative text-black cursor-pointer h-7 flex items-center bg-gradient-to-r from-accent to-primary rounded-tl-2xl rounded-br-2xl font-poppins'
-                            : 'py-2 px-4 mx-4 min-w-fit relative text-black cursor-pointer font-poppins after:content-[""] after:w-0 after:h-1 after:bg-gradient-to-r from-accent to-primary after:rounded-tl-lg after:rounded-br-lg after:absolute after:bottom-0 after:right-0 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:left-0'
-                    }
-                >
-                    <a href={path ?? ''}>{label ?? ''}</a>
-                </li>
+                <a key={path} href={path ?? ''} onClick={() => setNavActive(false)}>
+                    <li
+                        className={
+                            gradient
+                                ? 'px-4 mx-4 min-w-max relative text-black cursor-pointer h-7 flex items-center bg-gradient-to-r from-accent to-primary rounded-tl-2xl rounded-br-2xl font-poppins'
+                                : 'py-2 px-4 mx-4 min-w-max relative text-black cursor-pointer font-poppins after:content-[""] after:w-0 after:h-1 after:bg-gradient-to-r from-accent to-primary after:rounded-tl-lg after:rounded-br-lg after:absolute after:bottom-0 after:right-0 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:left-0'
+                        }
+                    >
+                        {label ?? ''}
+                    </li>
+                </a>
             );
         });
     };
   return (
-    <nav className='flex h-14 bg-background items-center'>
+    <nav className='flex h-14 bg-background items-center fixed w-full z-[11]'>
         <div className='flex items-center justify-between w-full px-4 mx-auto'>
             <div className='flex flex-col ml-4'>
                 <div className='text-black text-left text-xl '>Wojciech</div>
