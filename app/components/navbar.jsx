@@ -1,13 +1,13 @@
 'use client';
-import React from 'react';
-import { Link } from 'next/link';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { HiMenuAlt3, HiX } from 'react-icons/hi';
 
-import { useDisableBodyScroll } from '../hooks/useDisableBodyScroll';
-
 const Navbar = () => {
-    const [ navActive, setNavActive ] = useState(false);
+    const router = useRouter();
+    const [navActive, setNavActive] = useState(false);
+
     const mockNavData = [
         {
             path: '#blog',
@@ -15,25 +15,26 @@ const Navbar = () => {
             gradient: true,
         },
         {
-            path: '#o-mnie',
+            path: '/#o-mnie',
             label: 'O mnie',
         },
         {
-            path: '#ekoslownik',
+            path: '/#ekoslownik',
             label: 'Ekosłownik',
         },
         {
-            path: '#kontakt',
+            path: '/#kontakt',
             label: 'Kontakt',
         },
     ];
-    
+
     const renderMenu = () => {
         return mockNavData.map((item) => {
             const { path, label, gradient } = item;
             return (
-                <a key={path} href={path ?? ''} onClick={() => setNavActive(false)}>
+                <a key={path} href={path ?? ''} scroll='false'>
                     <li
+                        onClick={() => setNavActive(false)}
                         className={
                             gradient
                                 ? 'px-4 mx-4 min-w-max relative text-black cursor-pointer h-7 flex items-center bg-gradient-to-r from-accent to-primary rounded-tl-2xl rounded-br-2xl font-poppins'
@@ -46,15 +47,16 @@ const Navbar = () => {
             );
         });
     };
-  return (
-    <nav className='flex h-14 bg-background items-center fixed w-full z-[11]'>
-        <div className='flex items-center justify-between w-full px-4 mx-auto'>
-            <div className='flex flex-col ml-4'>
-                <div className='text-black text-left text-xl '>Wojciech</div>
-                <div className='text-black text-right ml-5 text-xl'>Czekała</div>
+
+    return (
+        <nav className='flex h-14 bg-background items-center fixed w-full z-[11]'>
+            <div className='flex items-center justify-between w-full px-4 mx-auto'>
+                <div className='flex flex-col ml-4 cursor-pointer' onClick={() => router.push('/')}>
+                    <div className='text-black text-left text-xl'>Wojciech</div>
+                    <div className='text-black text-right ml-5 text-xl'>Czekała</div>
+                </div>
             </div>
-        </div>
-        {navActive ? (
+            {navActive ? (
                 <HiX
                     className='inline-block text-color-black text-[2rem] mr-1 lg:hidden'
                     onClick={() => setNavActive(false)}
@@ -65,9 +67,11 @@ const Navbar = () => {
                     onClick={() => setNavActive(true)}
                 />
             )}
-            <ul className={`z-20 flex flex-col items-center justify-center gap-y-6 min-h-screen fixed top-14 w-full -right-full text-2xl bg-background transition-all duration-500 ease-in-out ${navActive ? 'right-0' : ''} md:text-3xl lg:flex-row lg:items-center lg:p-0 lg:w-fit lg:min-h-fit lg:static lg:text-base`}>{renderMenu()}</ul>
-    </nav>
-  )
+            <ul className={`z-20 flex flex-col items-center justify-center gap-y-6 min-h-screen fixed top-14 w-full -right-full text-2xl bg-background transition-all duration-500 ease-in-out ${navActive ? 'right-0' : ''} md:text-3xl lg:flex-row lg:items-center lg:p-0 lg:w-fit lg:min-h-fit lg:static lg:text-base`}>
+                {renderMenu()}
+            </ul>
+        </nav>
+    );
 }
 
 export default Navbar;

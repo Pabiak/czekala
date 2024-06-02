@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { FaArrowRight, FaArrowUp } from 'react-icons/fa6';
 import {
     BsBook,
@@ -13,11 +14,42 @@ import {
     BsEnvelopeFill,
     BsTelephoneFill,
 } from 'react-icons/bs';
+import { saveUser } from '@/utils/Newsletter';
+import { info } from '../info';
+import { useState } from 'react';
 
 export default function Home() {
+    const router = useRouter();
+
     const scrollToTop = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    };
+
+    const { linkedIn, email, phone } = info;
+    const [userEmail, setUserEmail] = useState('');
+    const [status, setStatus] = useState('');
+    const [message, setMessage] = useState('');
+
+    const handleSubmit = async () => {
+        // add validation for email
+        // email regex
+        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        if (!emailRegex.test(userEmail)) {
+            setStatus('Error');
+            setMessage('Niepoprawny adres e-mail');
+            return;
+        }
+
+        const result = await saveUser(userEmail);
+
+        if (result.success) {
+            setStatus('Success');
+            setMessage('Dziękuję za zapisanie się do newslettera!');
+        } else {
+            setStatus('Error');
+            setMessage(result.message == 'Contact already added' ? 'Adres e-mail jest już zapisany' : 'Coś poszło nie tak, spróbuj ponownie');
+        }
+    };
 
     return (
         <>
@@ -37,7 +69,10 @@ export default function Home() {
                 className='z-10 flex fixed items-center justify-center w-[30px] h-[30px] md:w-[60px] md:h-[60px] bg-gradient-to-t from-darkGreen to-lightBlue rounded-[50%] bottom-3 right-2 hover:cursor-pointer'
                 onClick={() => scrollToTop()}
             >
-                <button type='button' className='text-white text-lg md:text-3xl'>
+                <button
+                    type='button'
+                    className='text-white text-lg md:text-3xl'
+                >
                     <FaArrowUp />
                 </button>
             </div>
@@ -58,26 +93,40 @@ export default function Home() {
                             Zbudujmy razem przyszłość
                         </h2>
                     </div>
-                    <div className='flex items-center flex-col lg:items-start lg:mt-16'>
+                    <div className='flex items-center flex-col lg:items-start lg:mt-10'>
                         <p className='font-normal font-poppins tracking-wide md:mt-2 md:text-2xl lg:ml-2'>
                             Zapisz się do newslettera
                         </p>
                         <p className='text-sm font-poppins font-thin tracking-wider md:text-lg lg:ml-2'>
                             i bądź na bieżąco z moją działalnością
                         </p>
+                        {status && (
+                            <div
+                                className={`${
+                                    status === 'Success'
+                                        ? 'text-green-500'
+                                        : 'text-red-500'
+                                } text-center w-[20rem] mt-2`}
+                            >
+                                {message}
+                            </div>
+                        )}
                         <div className='relative'>
-                            <form>
+                            <form action={handleSubmit}>
                                 <button
                                     type='submit'
-                                    className='my-3 absolute -right-[3px] mr-1 bg-accent text-white text-3xl rounded-[50%] w-fit h-fit p-[0.7rem]'
+                                    className='mb-3 absolute -right-[3px] mr-1 bg-accent text-white text-3xl rounded-[50%] w-fit h-fit p-[0.7rem]'
                                 >
                                     <FaArrowRight />
                                 </button>
                                 <input
                                     required
+                                    onChange={(e) =>
+                                        setUserEmail(e.target.value)
+                                    }
                                     type='email'
                                     placeholder='Miejsce na twój adres e-mail'
-                                    className='my-3 focus:outline-none border-solid border-2 border-accent rounded-full bg-accent bg-opacity-25 w-[20rem] p-3 indent-5'
+                                    className='mb-3 focus:outline-none border-solid border-2 border-accent rounded-full bg-accent bg-opacity-25 w-[20rem] p-3 indent-5'
                                 />
                             </form>
                         </div>
@@ -238,7 +287,7 @@ export default function Home() {
                         </p>
                     </div>
                     <div className='p-4 w-full grid place-items-center lg:order-3'>
-                        <div className='bg-gray-200 w-full h-[20rem] md:w-[30rem] md:h-[30rem] lg:w-[35rem[ lg:h-[35rem]'>
+                        <div className='bg-gray-200 w-full h-[20rem] md:w-[30rem] md:h-[30rem] px-4'>
                             Zdjęcie 2
                         </div>
                     </div>
@@ -278,56 +327,54 @@ export default function Home() {
                 </div>
             </section>
             <div className='bg-gradient-to-r from-accent to-primary w-full h-5 -rotate-[5deg] -mt-9 lg:-mt-6 lg:-rotate-[2deg] mb-10' />
-            <section className='my-14'>
+            <section className='my-14' id='ekoslownik'>
                 <div className='flex flex-wrap gap-[5rem] items-center justify-center'>
                     <div className='h-[300px] w-[300px] bg-gradient-to-r from-accent  to-primary p-1 drop-shadow-2xl'>
-                        <div className='flex flex-col h-full w-full text-justify items-center justify-center bg-grayish p-4 gap-y-3'>
+                        <div className='flex flex-col h-full w-full text-justify items-center bg-grayish p-4 gap-y-3'>
                             <p className='text-xl text-black font-black'>
-                                Lorem ipsum
+                                Środowisko
                             </p>
                             <span>
-                                Lorem ipsum dolor sit, amet consectetur
-                                adipisicing elit. Possimus provident rerum odio
-                                aspernatur alias saepe, doloribus exercitationem
-                                reiciendis excepturi id animi ad magnam
-                                dignissimos, inventore maxime quo quae ab
-                                praesentium?
+                                Pod tym pojęciem należy rozumieć ogół elementów
+                                przyrodniczych ożywionych i nieożywionych,
+                                wzajemne oddziaływania pomiędzy nimi. Pojęcie
+                                środowiska obejmuję również jego elementy które
+                                zostały przekształcone w wyniku działalności
+                                człowieka.
                             </span>
                         </div>
                     </div>
                     <div className='h-[300px] w-[300px] bg-gradient-to-r from-accent  to-primary p-1 drop-shadow-2xl'>
-                        <div className='flex flex-col h-full w-full text-justify items-center justify-center bg-grayish p-4 gap-y-3'>
+                        <div className='flex flex-col h-full w-full text-justify items-center bg-grayish p-4 gap-y-3'>
                             <p className='text-xl text-black font-black'>
-                                Lorem ipsum
+                                Odpady
                             </p>
                             <span>
-                                Lorem ipsum dolor sit, amet consectetur
-                                adipisicing elit. Possimus provident rerum odio
-                                aspernatur alias saepe, doloribus exercitationem
-                                reiciendis excepturi id animi ad magnam
-                                dignissimos, inventore maxime quo quae ab
-                                praesentium?
+                                Przedmioty lub substancje powstałe w wyniku
+                                działalności człowieka, które nie są mu
+                                przydatne w danym miejscu i czasie.
                             </span>
                         </div>
                     </div>
                     <div className='h-[300px] w-[300px] bg-gradient-to-r from-accent  to-primary p-1 drop-shadow-2xl'>
-                        <div className='flex flex-col h-full w-full text-justify items-center justify-center bg-grayish p-4 gap-y-3'>
+                        <div className='flex flex-col h-full w-full text-justify items-center bg-grayish p-4 gap-y-3'>
                             <p className='text-xl text-black font-black'>
-                                Lorem ipsum
+                                Energia
                             </p>
                             <span>
-                                Lorem ipsum dolor sit, amet consectetur
-                                adipisicing elit. Possimus provident rerum odio
-                                aspernatur alias saepe, doloribus exercitationem
-                                reiciendis excepturi id animi ad magnam
-                                dignissimos, inventore maxime quo quae ab
-                                praesentium?
+                                Jest to skalarna wielkość fizyczna wyrażająca
+                                zdolność do wykonania pracy przez ciało lub
+                                układ ciał. Jednostką energii w układzie SI jest
+                                dżul [J].
                             </span>
                         </div>
                     </div>
                 </div>
                 <div className='flex items-center justify-center'>
-                    <button className='w-[15rem] h-[4rem] bg-gradient-to-r from-accent to-primary rounded-[45px] mt-10 px-4'>
+                    <button
+                        className='w-[15rem] h-[4rem] bg-gradient-to-r from-accent to-primary rounded-[45px] mt-10 px-4 font-medium'
+                        onClick={() => router.push('/eko-slownik')}
+                    >
                         Sprawdź kompendium
                     </button>
                 </div>
@@ -344,26 +391,32 @@ export default function Home() {
                     </span>
                 </h1>
                 <div className='grid place-items-center grid-cols-1 w-full mt-5 lg:grid-cols-3 gap-y-8'>
-                    <div className='flex flex-col items-center justify-center w-[15rem]'>
-                        <BsEnvelopeFill
-                            className='text-7xl'
-                            style={{ fill: 'url(#gradient)' }}
-                        />
-                        <span>wojciech.czekala@up.poznan.pl</span>
+                    <div className='flex flex-col items-center justify-center w-[15rem] hover:cursor-pointer'>
+                        <a href={`mailto:${email}`}>
+                            <BsEnvelopeFill
+                                className='text-7xl'
+                                style={{ fill: 'url(#gradient)' }}
+                            />
+                        </a>
+                        <span>{email}</span>
                     </div>
                     <div className='flex flex-col items-center justify-center gap-y-2 w-[15rem]'>
-                        <BsLinkedin
-                            className='text-6xl'
-                            style={{ fill: 'url(#gradient)' }}
-                        />
+                        <a href={linkedIn} target='_blank'>
+                            <BsLinkedin
+                                className='text-6xl'
+                                style={{ fill: 'url(#gradient)' }}
+                            />
+                        </a>
                         <span>Wojciech Czekała</span>
                     </div>
                     <div className='flex flex-col items-center justify-center gap-y-2 w-[15rem]'>
-                        <BsTelephoneFill
-                            className='text-6xl'
-                            style={{ fill: 'url(#gradient)' }}
-                        />
-                        <span>123456789</span>
+                        <a href={`tel:${phone}`}>
+                            <BsTelephoneFill
+                                className='text-6xl'
+                                style={{ fill: 'url(#gradient)' }}
+                            />
+                        </a>
+                        <span>{phone}</span>
                     </div>
                 </div>
             </section>
