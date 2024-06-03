@@ -76,7 +76,7 @@ export default function Home() {
                     <FaArrowUp />
                 </button>
             </div>
-            <header className='flex flex-col gap-8 bg-header bg-cover bg-center bg-no-repeat w-full h-full clipPath-header pt-8  lg:flex-row lg:pt-16'>
+            <header className='flex flex-col gap-8 bg-header bg-blend-darken bg-blend-darken-color bg-cover bg-center bg-no-repeat w-full h-full clipPath-header pt-8  lg:flex-row lg:pt-16'>
                 <div className='font-poppins lg:w-[35%] lg:ml-[7rem]'>
                     <div>
                         <h1 className='flex flex-col text-5xl font-bold text-center mt-10 md:text-7xl lg:text-start'>
@@ -115,7 +115,7 @@ export default function Home() {
                             <form action={handleSubmit}>
                                 <button
                                     type='submit'
-                                    className='mb-3 absolute -right-[3px] mr-1 bg-accent text-white text-3xl rounded-[50%] w-fit h-fit p-[0.7rem]'
+                                    className='my-3 absolute -right-[3px] mr-1 bg-accent text-white text-3xl rounded-[50%] w-fit h-fit p-[0.7rem]'
                                 >
                                     <FaArrowRight />
                                 </button>
@@ -126,7 +126,7 @@ export default function Home() {
                                     }
                                     type='email'
                                     placeholder='Miejsce na twój adres e-mail'
-                                    className='mb-3 focus:outline-none border-solid border-2 border-accent rounded-full bg-accent bg-opacity-25 w-[20rem] p-3 indent-5'
+                                    className='my-3 focus:outline-none border-solid border-2 border-accent rounded-full bg-accent bg-opacity-25 w-[20rem] p-3 indent-5'
                                 />
                             </form>
                         </div>
@@ -226,7 +226,7 @@ export default function Home() {
                         </span>
                     </span>
                 </h1>
-                <div className='mt-10 grid grid-cols-1 place-items-center lg:grid-cols-2 '>
+                <div className='mt-10 grid gap-y-6 grid-cols-1 place-items-center lg:grid-cols-2 '>
                     <div className='text-center lg:max-w-[35rem] lg:text-left lg:order-1 p-4'>
                         <span className='relative font-bold text-xl'>
                             <span className='inset-0 before:absolute before:content-[""] before:-rotate-3 before:w-full before:h-full before:bg-gradient-to-r before:from-accent before:to-primary before:rounded-tl-[20px] before:rounded-br-[20px] lg:before:-left-5 lg:before:w-[120%] lg:before:m-2'></span>
@@ -250,8 +250,15 @@ export default function Home() {
                         </p>
                     </div>
                     <div className='p-4 w-full grid place-items-center lg:order-2'>
-                        <div className='bg-gray-200 w-full h-[20rem] md:w-[30rem] md:h-[30rem] px-4'>
-                            Zdjęcie 1
+                        <div className='relative px-4 flex items-center justify-center'>
+                            <Image 
+                                src={'/czekala1.jpg'}
+                                alt='Zdjęcie przedstawiające Profesora Czekałę'
+                                width={550}
+                                height={550}
+                                objectFit='contain'
+                                className="rounded-lg drop-shadow-2xl"
+                             />
                         </div>
                     </div>
                     <div className='text-center lg:max-w-[35rem] lg:text-left lg:order-4 p-4'>
@@ -287,8 +294,15 @@ export default function Home() {
                         </p>
                     </div>
                     <div className='p-4 w-full grid place-items-center lg:order-3'>
-                        <div className='bg-gray-200 w-full h-[20rem] md:w-[30rem] md:h-[30rem] px-4'>
-                            Zdjęcie 2
+                        <div className='relative px-4 flex items-center justify-center'>
+                        <Image 
+                                src={'/czekala2.jpeg'}
+                                alt='Zdjęcie przedstawiające Profesora Czekałę'
+                                width={550}
+                                height={550}
+                                objectFit='contain'
+                                className="rounded-lg drop-shadow-2xl"
+                             />
                         </div>
                     </div>
                     <div className='text-center lg:max-w-[35rem] lg:text-left lg:order-5 p-4'>
@@ -320,8 +334,15 @@ export default function Home() {
                         </p>
                     </div>
                     <div className='p-4 w-full grid place-items-center lg:order-6'>
-                        <div className='bg-gray-200 w-full h-[20rem] md:w-[30rem] md:h-[30rem]'>
-                            Zdjęcie 3
+                        <div className='relative flex items-center justify-center'>
+                        <Image 
+                                src={'/czekala3.jpeg'}
+                                alt='Zdjęcie przedstawiające Profesora Czekałę'
+                                width={350}
+                                height={350}
+                                objectFit='contain'
+                                className="rounded-lg drop-shadow-2xl"
+                             />
                         </div>
                     </div>
                 </div>
