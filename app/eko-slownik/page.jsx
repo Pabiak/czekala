@@ -61,7 +61,7 @@ const DictionaryPage = () => {
     });
 
     return (
-        <section id='eko-slownik' className='pt-[5rem]'>
+        <section id='eko-slownik' className='pt-[5rem] mb-[auto] flex flex-col min-h-[100vh]'>
             <h1 className='text-2xl text-center font-bold md:text-4xl'>
                 <span className='relative'>
                     <span className='inset-0 before:absolute before:content-[""] before:-rotate-3 before:w-full before:h-full before:bg-gradient-to-r before:from-accent before:to-primary before:rounded-tl-[20px] before:rounded-br-[20px] lg:before:-left-5 lg:before:w-[120%]'></span>
@@ -70,7 +70,7 @@ const DictionaryPage = () => {
                     </span>
                 </span>
             </h1>
-            <div className='mt-10 grid place-items-center grid-cols-1 lg:grid-cols-2 items-start'>
+            <div className='mt-10 grid place-items-center grid-cols-1 lg:grid-cols-2 items-start h-full'>
                 {dictionaryItems}
             </div>
         </section>

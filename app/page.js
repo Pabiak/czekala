@@ -14,9 +14,7 @@ import {
     BsEnvelopeFill,
     BsTelephoneFill,
 } from 'react-icons/bs';
-import { saveUser } from '@/utils/Newsletter';
 import { info } from '../info';
-import { useState } from 'react';
 
 export default function Home() {
     const router = useRouter();
@@ -26,30 +24,6 @@ export default function Home() {
     };
 
     const { linkedIn, email, phone } = info;
-    const [userEmail, setUserEmail] = useState('');
-    const [status, setStatus] = useState('');
-    const [message, setMessage] = useState('');
-
-    const handleSubmit = async () => {
-        // add validation for email
-        // email regex
-        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-        if (!emailRegex.test(userEmail)) {
-            setStatus('Error');
-            setMessage('Niepoprawny adres e-mail');
-            return;
-        }
-
-        const result = await saveUser(userEmail);
-
-        if (result.success) {
-            setStatus('Success');
-            setMessage('Dziękuję za zapisanie się do newslettera!');
-        } else {
-            setStatus('Error');
-            setMessage(result.message == 'Contact already added' ? 'Adres e-mail jest już zapisany' : 'Coś poszło nie tak, spróbuj ponownie');
-        }
-    };
 
     return (
         <>
@@ -76,7 +50,7 @@ export default function Home() {
                     <FaArrowUp />
                 </button>
             </div>
-            <header className='flex flex-col gap-8 bg-header bg-blend-darken bg-blend-darken-color bg-cover bg-center bg-no-repeat w-full h-full clipPath-header pt-8  lg:flex-row lg:pt-16'>
+            <header className='flex flex-col gap-8 bg-header bg-blend-darken bg-blend-darken-color bg-cover bg-center bg-no-repeat w-full h-full clipPath-header pt-8 lg:flex-row lg:pt-16'>
                 <div className='font-poppins lg:w-[35%] lg:ml-[7rem]'>
                     <div>
                         <h1 className='flex flex-col text-5xl font-bold text-center mt-10 md:text-7xl lg:text-start'>
@@ -93,55 +67,19 @@ export default function Home() {
                             Zbudujmy razem przyszłość
                         </h2>
                     </div>
-                    <div className='flex items-center flex-col lg:items-start lg:mt-10'>
-                        <p className='font-normal font-poppins tracking-wide md:mt-2 md:text-2xl lg:ml-2'>
-                            Zapisz się do newslettera
-                        </p>
-                        <p className='text-sm font-poppins font-thin tracking-wider md:text-lg lg:ml-2'>
-                            i bądź na bieżąco z moją działalnością
-                        </p>
-                        {status && (
-                            <div
-                                className={`${
-                                    status === 'Success'
-                                        ? 'text-green-500'
-                                        : 'text-red-500'
-                                } text-center w-[20rem] mt-2`}
-                            >
-                                {message}
-                            </div>
-                        )}
-                        <div className='relative'>
-                            <form action={handleSubmit}>
-                                <button
-                                    type='submit'
-                                    className='my-3 absolute -right-[3px] mr-1 bg-accent text-white text-3xl rounded-[50%] w-fit h-fit p-[0.7rem]'
-                                >
-                                    <FaArrowRight />
-                                </button>
-                                <input
-                                    required
-                                    onChange={(e) =>
-                                        setUserEmail(e.target.value)
-                                    }
-                                    type='email'
-                                    placeholder='Miejsce na twój adres e-mail'
-                                    className='my-3 focus:outline-none border-solid border-2 border-accent rounded-full bg-accent bg-opacity-25 w-[20rem] p-3 indent-5'
-                                />
-                            </form>
-                        </div>
-                    </div>
                 </div>
-                <div className='flex items-center justify-center lg:justify-end'>
+                <div className='flex items-center justify-center lg:justify-end lg:w-[65%]'>
                     <Image
                         src={'/wojciech-header.png'}
                         alt='Zdjęcie przedstawiające profesora Czekałę'
                         width={700}
                         height={700}
+                        className='object-contain'
                     />
                 </div>
             </header>
-            <div className='bg-gradient-to-r from-accent to-primary w-full h-5 -rotate-[5deg] -mt-9 lg:-mt-6 lg:-rotate-[2deg] mb-10' />
+
+            <div className='bg-gradient-to-r from-accent to-primary w-full h-5 -rotate-[5deg] -mt-9 lg:-mt-7 lg:-rotate-[1.4deg] mb-10 md:-mt-11' />
             <section>
                 <div className='grid grid-cols-2 place-items-center gap-10 my-14 md:my-[5rem] lg:grid-cols-3'>
                     <div className='flex flex-col items-center'>
@@ -251,14 +189,14 @@ export default function Home() {
                     </div>
                     <div className='p-4 w-full grid place-items-center lg:order-2'>
                         <div className='relative px-4 flex items-center justify-center'>
-                            <Image 
+                            <Image
                                 src={'/czekala1.jpg'}
                                 alt='Zdjęcie przedstawiające Profesora Czekałę'
                                 width={550}
                                 height={550}
                                 objectFit='contain'
-                                className="rounded-lg drop-shadow-2xl"
-                             />
+                                className='rounded-lg drop-shadow-2xl'
+                            />
                         </div>
                     </div>
                     <div className='text-center lg:max-w-[35rem] lg:text-left lg:order-4 p-4'>
@@ -295,14 +233,14 @@ export default function Home() {
                     </div>
                     <div className='p-4 w-full grid place-items-center lg:order-3'>
                         <div className='relative px-4 flex items-center justify-center'>
-                        <Image 
+                            <Image
                                 src={'/czekala2.jpeg'}
                                 alt='Zdjęcie przedstawiające Profesora Czekałę'
                                 width={550}
                                 height={550}
                                 objectFit='contain'
-                                className="rounded-lg drop-shadow-2xl"
-                             />
+                                className='rounded-lg drop-shadow-2xl'
+                            />
                         </div>
                     </div>
                     <div className='text-center lg:max-w-[35rem] lg:text-left lg:order-5 p-4'>
@@ -335,14 +273,14 @@ export default function Home() {
                     </div>
                     <div className='p-4 w-full grid place-items-center lg:order-6'>
                         <div className='relative flex items-center justify-center'>
-                        <Image 
+                            <Image
                                 src={'/czekala3.jpeg'}
                                 alt='Zdjęcie przedstawiające Profesora Czekałę'
                                 width={350}
                                 height={350}
                                 objectFit='contain'
-                                className="rounded-lg drop-shadow-2xl"
-                             />
+                                className='rounded-lg drop-shadow-2xl'
+                            />
                         </div>
                     </div>
                 </div>
