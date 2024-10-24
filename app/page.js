@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 
 import Image from 'next/image';
@@ -69,7 +70,7 @@ export default function Home() {
                     </div>
                 </div>
                 <div className='flex items-center justify-center lg:justify-end lg:w-[65%]'>
-                    <Image
+                    <img
                         src={'/wojciech-header.png'}
                         alt='Zdjęcie przedstawiające profesora Czekałę'
                         width={700}
@@ -112,7 +113,7 @@ export default function Home() {
                             style={{ fill: 'url(#gradient)' }}
                         />
                         <span className='font-semibold md:text-2xl text-center'>
-                            +2000
+                            +2000 h
                         </span>
                         <span className='md:text-2xl text-center'>
                             szkoleń i wykładów
@@ -189,12 +190,11 @@ export default function Home() {
                     </div>
                     <div className='p-4 w-full grid place-items-center lg:order-2'>
                         <div className='relative px-4 flex items-center justify-center'>
-                            <Image
+                            <img
                                 src={'/czekala1.jpg'}
                                 alt='Zdjęcie przedstawiające Profesora Czekałę'
                                 width={550}
                                 height={550}
-                                objectFit='contain'
                                 className='rounded-lg drop-shadow-2xl'
                             />
                         </div>
@@ -233,12 +233,11 @@ export default function Home() {
                     </div>
                     <div className='p-4 w-full grid place-items-center lg:order-3'>
                         <div className='relative px-4 flex items-center justify-center'>
-                            <Image
+                            <img
                                 src={'/czekala2.jpeg'}
                                 alt='Zdjęcie przedstawiające Profesora Czekałę'
                                 width={550}
                                 height={550}
-                                objectFit='contain'
                                 className='rounded-lg drop-shadow-2xl'
                             />
                         </div>
@@ -273,12 +272,11 @@ export default function Home() {
                     </div>
                     <div className='p-4 w-full grid place-items-center lg:order-6'>
                         <div className='relative flex items-center justify-center'>
-                            <Image
+                            <img
                                 src={'/czekala3.jpeg'}
                                 alt='Zdjęcie przedstawiające Profesora Czekałę'
                                 width={350}
                                 height={350}
-                                objectFit='contain'
                                 className='rounded-lg drop-shadow-2xl'
                             />
                         </div>

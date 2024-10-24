@@ -10,7 +10,7 @@ const Navbar = () => {
 
     const mockNavData = [
         {
-            path: '#blog',
+            path: 'https://blog.wojciechczekala.pl',
             label: 'Blog',
             gradient: true,
         },
