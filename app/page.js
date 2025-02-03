@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 
-import Image from 'next/image';
+import Head from 'next/head';
 import { useRouter } from 'next/navigation';
 import { FaArrowRight, FaArrowUp } from 'react-icons/fa6';
 import {
@@ -28,6 +28,9 @@ export default function Home() {
 
     return (
         <>
+            <Head>
+                <link rel="canonical" href="https://wojciechczekala.pl/" />
+            </Head>
             <svg width='0' height='0'>
                 <linearGradient
                     id='gradient'
