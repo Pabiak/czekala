@@ -9,11 +9,11 @@ const Navbar = () => {
     const [navActive, setNavActive] = useState(false);
 
     const mockNavData = [
-        {
-            path: 'https://blog.wojciechczekala.pl',
-            label: 'Blog',
-            gradient: true,
-        },
+        // {
+        //     path: 'https://blog.wojciechczekala.pl',
+        //     label: 'Blog',
+        //     gradient: true,
+        // },
         {
             path: '/#o-mnie',
             label: 'O mnie',
