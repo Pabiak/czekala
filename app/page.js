@@ -282,7 +282,7 @@ export default function Home() {
         </div>
         <div className='flex items-center justify-center'>
           <button
-            className='w-[15rem] h-[4rem] bg-gradient-to-r from-accent to-primary rounded-[45px] mt-10 px-4 font-medium'
+            className='w-[15rem] h-[4rem] bg-gradient-to-r from-accent to-primary rounded-[45px] mt-10 px-4 font-medium text-black text-shadow-sm transition-shadow duration-300 hover:shadow-md hover:shadow-accent/80 hover:to-primary/90'
             onClick={() => router.push('/eko-slownik')}
           >
             Sprawdź kompendium
