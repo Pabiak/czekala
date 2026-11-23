@@ -1,0 +1,59 @@
+---
+import { Image } from 'astro:assets';
+import portrait from '../assets/wojciech-header.png';
+import { contact } from '../data/site';
+import { ui, routes, type Lang } from '../i18n/ui';
+
+interface Props {
+	lang: Lang;
+}
+const { lang } = Astro.props;
+const c = ui[lang];
+const t = c.contact;
+const label = 'text-label font-semibold text-ink-2 uppercase';
+const value = 'link justify-self-start font-serif leading-[1.25] tracking-[-0.015em] wrap-anywhere';
+---
+
+<section id={routes[lang].anchors.contact} class="pt-(--section-y)" aria-labelledby="contact-title">
+	<div class="wrap grid gap-6 lg:grid-cols-12">
+		<div class="pb-[clamp(16px,4vw,48px)] lg:col-span-7 lg:pb-(--section-y)">
+			<header class="mb-[clamp(40px,6vw,72px)] grid gap-4" data-reveal>
+				<h2 id="contact-title" class="text-h2">{t.heading}</h2>
+				<!-- TODO: short line on what to write about (e.g. talks, trainings, projects) – needs the client's own wording. -->
+			</header>
+
+			<ul class="grid border-t border-line-strong" data-reveal style="--d: 60ms">
+				<li class="grid gap-1 border-b border-line py-5">
+					<span class={label}>{t.email}</span>
+					<a class={`${value} text-[clamp(1.625rem,4.2vw,3.25rem)]`} href={`mailto:${contact.email}`}>{contact.email}</a>
+				</li>
+				<li class="grid gap-1 border-b border-line py-5">
+					<span class={label}>{t.phone}</span>
+					<a class={`${value} text-[clamp(1.5rem,3vw,2.25rem)]`} href={contact.phoneHref}>{contact.phone}</a>
+				</li>
+				<li class="grid gap-1 border-b border-line py-5">
+					<span class={label}>{t.linkedin}</span>
+					<a class={`${value} text-[clamp(1.5rem,3vw,2.25rem)]`} href={contact.linkedIn} target="_blank" rel="noopener"
+						>Wojciech Czekała <span class="sr-only">{c.ui.newTab}</span></a
+					>
+				</li>
+			</ul>
+		</div>
+
+		<!-- The source cut-out ends on a slanted edge; the aspect box crops it so the portrait sits flat on the footer line. -->
+		<figure
+			class="aspect-[793/560] w-[min(100%,520px)] self-end justify-self-center overflow-hidden lg:col-start-8 lg:col-end-13 lg:justify-self-end"
+			data-reveal
+			style="--d: 120ms"
+		>
+			<Image
+				src={portrait}
+				alt={t.alt}
+				widths={[360, 560, 793]}
+				sizes="(min-width: 1024px) 40vw, 90vw"
+				quality={78}
+				class="h-auto w-full"
+			/>
+		</figure>
+	</div>
+</section>

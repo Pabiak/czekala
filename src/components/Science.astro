@@ -1,0 +1,65 @@
+---
+import { journals, books } from '../data/site';
+import { ui, routes, type Lang } from '../i18n/ui';
+
+interface Props {
+	lang: Lang;
+}
+const { lang } = Astro.props;
+const t = ui[lang].science;
+const label = 'mb-4 font-sans text-label font-semibold text-forest uppercase';
+---
+
+<section id={routes[lang].anchors.science} class="bg-paper-2 py-(--section-y)" aria-labelledby="science-title">
+	<div class="wrap">
+		<header class="mb-[clamp(40px,6vw,72px)] grid gap-4" data-reveal>
+			<h2 id="science-title" class="text-h2">{t.heading}</h2>
+			<p class="max-w-[52ch] text-lead text-ink-2">{t.lead}</p>
+		</header>
+
+		<div class="grid gap-14 lg:grid-cols-12 lg:items-start lg:gap-6">
+			<div class="grid content-start gap-3 rounded-md bg-forest p-[clamp(28px,4vw,48px)] text-paper-3 lg:col-span-5" data-reveal>
+				<p class="font-serif text-[clamp(4.5rem,10vw,6rem)] leading-[0.9] tracking-[-0.035em]">Top 2%</p>
+				<p class="font-semibold tracking-[0.08em] text-moss-light">{t.rankYears}</p>
+				<p class="max-w-[48ch] text-paper-3/86">{t.rankText}</p>
+			</div>
+
+			<div class="lg:col-start-7 lg:col-end-13" data-reveal style="--d: 80ms">
+				<h3 class={label}>{t.journalsHeading}</h3>
+				<ul lang="en">
+					{
+						journals.map((j) => (
+							<li class="border-b border-line py-3.5 font-serif text-[clamp(1.5rem,2.6vw,2.125rem)] leading-[1.15] tracking-[-0.015em] italic first:border-t first:border-t-line-strong">
+								{j}
+							</li>
+						))
+					}
+				</ul>
+			</div>
+		</div>
+
+		<div class="mt-[clamp(64px,9vw,112px)]" data-reveal>
+			<h3 class={label}>{t.booksHeading}</h3>
+			<p class="mb-8 max-w-[60ch] text-ink-2">{t.booksIntro}</p>
+			<ol class="border-t border-line-strong">
+				{
+					books.map((b, i) => (
+						<li class="grid gap-2 border-b border-line py-7 lg:grid-cols-12 lg:items-baseline lg:gap-6">
+							<p class="flex gap-4 text-[0.9375rem] font-semibold text-forest lg:col-span-3 lg:flex-col lg:gap-0.5">
+								<span>{b.year}</span>
+								<span>{b.publisher}</span>
+							</p>
+							<p
+								class="max-w-[32ch] font-serif text-[clamp(1.5rem,2.8vw,2.25rem)] leading-[1.15] tracking-[-0.015em] lg:col-span-6 lg:col-start-4"
+								lang="en"
+							>
+								{lang === 'pl' ? `„${b.title}”` : `“${b.title}”`}
+							</p>
+							<p class="text-ink-2 lg:col-start-10 lg:col-end-13">{t.bookRoles[i]}</p>
+						</li>
+					))
+				}
+			</ol>
+		</div>
+	</div>
+</section>

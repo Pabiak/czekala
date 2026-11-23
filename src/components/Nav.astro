@@ -1,0 +1,101 @@
+---
+import { ui, routes, langs, type Lang, type PageKey } from '../i18n/ui';
+
+interface Props {
+	lang: Lang;
+	page: PageKey;
+}
+const { lang, page } = Astro.props;
+const t = ui[lang];
+const r = routes[lang];
+const items = [
+	{ href: `${r.home}#${r.anchors.about}`, label: t.nav.about },
+	{ href: `${r.home}#${r.anchors.glossary}`, label: t.nav.glossary },
+	{ href: `${r.home}#${r.anchors.contact}`, label: t.nav.contact },
+];
+const langNames: Record<Lang, string> = { pl: 'Polski', en: 'English' };
+---
+
+<!--
+  JS (src/scripts/motion.ts) toggles .is-scrolled, .is-hidden and .is-open on the header;
+  the classes below react to them through [&.x]: and group-[.x]: variants.
+-->
+<header
+	class="group sticky top-0 z-50 h-(--nav-h) border-b border-transparent bg-paper/86 backdrop-blur-md backdrop-saturate-140 transition-[transform,border-color] duration-280 ease-out [&.is-hidden]:-translate-y-full [&.is-scrolled]:border-line max-md:[&.is-open]:translate-y-0! max-md:[&.is-open]:bg-paper max-md:[&.is-open]:backdrop-blur-none"
+	data-nav
+>
+	<div class="wrap flex h-full items-center gap-[clamp(16px,3vw,40px)] max-md:gap-1">
+		<a
+			class="relative z-2 mr-auto py-2.5 font-serif text-[1.3125rem] tracking-[-0.01em] whitespace-nowrap max-md:text-[1.1875rem]"
+			href={r.home}
+			aria-label={t.ui.brandLabel}
+			data-brand
+		>
+			<span class="text-forest max-2xs:hidden">Prof.</span> Wojciech Czekała
+		</a>
+
+		<nav
+			class="max-md:invisible max-md:fixed max-md:inset-0 max-md:z-1 max-md:flex max-md:items-center max-md:bg-paper max-md:px-(--gutter) max-md:pt-[calc(var(--nav-h)+24px)] max-md:pb-12 max-md:opacity-0 max-md:transition-[opacity,visibility] max-md:duration-240 max-md:ease-out max-md:group-[.is-open]:visible max-md:group-[.is-open]:opacity-100"
+			id="menu"
+			aria-label={t.ui.navLabel}
+			data-nav-menu
+		>
+			<ul class="flex gap-[clamp(20px,3vw,40px)] max-md:w-full max-md:flex-col max-md:gap-2">
+				{
+					items.map((item) => (
+						<li>
+							<a
+								class="relative inline-block py-3 text-[0.9375rem] font-medium after:absolute after:inset-x-0 after:bottom-2 after:h-px after:origin-right after:scale-x-0 after:bg-current after:transition-transform after:duration-240 after:ease-out hover:after:origin-left hover:after:scale-x-100 max-md:py-2 max-md:font-serif max-md:text-[2.5rem] max-md:font-normal max-md:tracking-[-0.02em] max-md:after:hidden"
+								href={item.href}
+							>
+								{item.label}
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</nav>
+
+		<ul
+			class="relative z-2 flex items-center border-l border-line-strong pl-[clamp(12px,2vw,24px)] max-md:pl-2"
+			aria-label={t.ui.langLabel}
+		>
+			{
+				langs.map((l) => (
+					<li>
+						<a
+							class="grid min-h-11 min-w-9 place-items-center text-label font-semibold tracking-[0.08em] text-ink-2 transition-colors duration-200 ease-out hover:text-forest aria-[current=true]:text-ink aria-[current=true]:underline aria-[current=true]:decoration-1 aria-[current=true]:underline-offset-6"
+							href={routes[l][page]}
+							hreflang={l}
+							lang={l}
+							aria-current={l === lang ? 'true' : undefined}
+							aria-label={langNames[l]}
+						>
+							{l.toUpperCase()}
+						</a>
+					</li>
+				))
+			}
+		</ul>
+
+		<button
+			class="group/toggle relative z-2 -mr-3 hidden size-12 cursor-pointer place-items-center text-ink max-md:grid"
+			type="button"
+			aria-expanded="false"
+			aria-controls="menu"
+			data-nav-toggle
+			data-label-open={t.ui.menuOpen}
+			data-label-close={t.ui.menuClose}
+		>
+			<span class="sr-only" data-nav-label>{t.ui.menuOpen}</span>
+			<span class="grid w-[22px] gap-1.5" aria-hidden="true">
+				<span
+					class="block h-[1.5px] bg-current transition-transform duration-240 ease-out group-aria-expanded/toggle:translate-y-[3.75px] group-aria-expanded/toggle:rotate-45"
+				></span>
+				<span
+					class="block h-[1.5px] bg-current transition-transform duration-240 ease-out group-aria-expanded/toggle:-translate-y-[3.75px] group-aria-expanded/toggle:-rotate-45"
+				></span>
+			</span>
+		</button>
+	</div>
+</header>

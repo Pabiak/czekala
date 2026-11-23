@@ -1,0 +1,37 @@
+---
+import { ui, routes, glossaryPreviewKeys, type Lang } from '../i18n/ui';
+import Arrow from './Arrow.astro';
+
+interface Props {
+	lang: Lang;
+}
+const { lang } = Astro.props;
+const t = ui[lang].glossary;
+const preview = glossaryPreviewKeys.map((k) => t.entries[k]);
+---
+
+<section id={routes[lang].anchors.glossary} class="bg-paper-2 py-(--section-y)" aria-labelledby="glossary-title">
+	<div class="wrap">
+		<header class="mb-[clamp(40px,6vw,72px)] grid items-end gap-4 md:grid-cols-[1fr_auto]" data-reveal>
+			<h2 id="glossary-title" class="text-h2">{t.heading}</h2>
+			<a class="btn btn-ghost justify-self-start" href={routes[lang].glossary}>
+				{t.cta} <Arrow />
+			</a>
+		</header>
+
+		<dl class="grid border-t border-line-strong md:grid-cols-3 md:gap-x-[clamp(24px,3vw,48px)] md:border-t-0">
+			{
+				preview.map((g, i) => (
+					<div
+						class="grid gap-3 border-b border-line pt-7 pb-8 md:content-start md:border-t md:border-b-0 md:border-t-line-strong"
+						data-reveal
+						style={`--d: ${[0, 70, 120][i]}ms`}
+					>
+						<dt class="font-serif text-term">{g.term}</dt>
+						<dd class="max-w-[46ch] text-ink-2">{g.definition}</dd>
+					</div>
+				))
+			}
+		</dl>
+	</div>
+</section>

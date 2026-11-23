@@ -22,3 +22,13 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# design-skill working files
+.taste-skill/
+
+# local AI/design tooling (not part of the site)
+skills/
+skills-lock.json
+.codex/
+.impeccable/
+.agents/

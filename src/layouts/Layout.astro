@@ -1,23 +1,106 @@
+---
+import { Font } from 'astro:assets';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import ToTop from '../components/ToTop.astro';
+import { site, contact } from '../data/site';
+import { ui, routes, langs, type Lang, type PageKey } from '../i18n/ui';
+import '../styles/global.css';
+
+interface Props {
+	lang: Lang;
+	/** Which page this is; used for canonical, hreflang and the language switch. */
+	page: PageKey;
+	title?: string;
+	/** Extra JSON-LD objects for this page. */
+	schema?: Record<string, unknown>[];
+}
+
+const { lang, page, schema = [] } = Astro.props;
+const t = ui[lang];
+const title = Astro.props.title ?? t.meta.title;
+const description = t.meta.description;
+const urlFor = (l: Lang) => new URL(routes[l][page], site.url).href;
+const canonical = urlFor(lang);
+
+const person = {
+	'@context': 'https://schema.org',
+	'@type': 'Person',
+	'@id': `${site.url}/#person`,
+	name: 'Wojciech Czekała',
+	honorificPrefix: 'Prof.',
+	jobTitle: t.meta.jobTitle,
+	description: t.meta.personDescription,
+	url: new URL(routes[lang].home, site.url).href,
+	image: site.ogImage.url,
+	email: `mailto:${contact.email}`,
+	telephone: contact.phone.replace(/-/g, ' '),
+	sameAs: ['https://www.linkedin.com/in/wojciechczekala/'],
+	knowsAbout: [...t.about.areas.slice(0, 7), lang === 'pl' ? 'Biogaz' : 'Biogas'],
+	// TODO: add `affiliation` (university/employer) – not stated anywhere on the current site.
+};
+---
+
 <!doctype html>
-<html lang="en">
+<html lang={t.htmlLang}>
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<link rel="canonical" href={canonical} />
+		{langs.map((l) => <link rel="alternate" hreflang={l} href={urlFor(l)} />)}
+		<link rel="alternate" hreflang="x-default" href={urlFor('pl')} />
+		<meta name="theme-color" content="#edebe4" />
+
+		<link rel="icon" href="/favicon.ico" sizes="any" />
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<link rel="manifest" href="/site.webmanifest" />
+		<link rel="sitemap" href="/sitemap.xml" />
+
+		<meta property="og:type" content="website" />
+		<meta property="og:locale" content={t.ogLocale} />
+		{langs.filter((l) => l !== lang).map((l) => <meta property="og:locale:alternate" content={ui[l].ogLocale} />)}
+		<meta property="og:site_name" content={site.name} />
+		<meta property="og:url" content={canonical} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={site.ogImage.url} />
+		<meta property="og:image:width" content={String(site.ogImage.width)} />
+		<meta property="og:image:height" content={String(site.ogImage.height)} />
+		<meta property="og:image:alt" content={site.ogImage.alt} />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={site.ogImage.url} />
+
+		<Font cssVariable="--font-newsreader" preload={[{ subset: 'latin', style: 'normal' }]} />
+		<Font cssVariable="--font-hanken" preload={[{ subset: 'latin' }]} />
+
+		<script is:inline>
+			// Enable the reveal start state only when motion is allowed and JS runs.
+			if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+				document.documentElement.classList.add('motion');
+			}
+		</script>
+
+		<script type="application/ld+json" set:html={JSON.stringify([person, ...schema])} />
 	</head>
 	<body>
-		<slot />
+		<a
+			class="fixed top-2 left-2 z-100 -translate-y-[150%] rounded-md bg-ink px-[18px] py-3 text-paper no-underline transition-transform duration-160 ease-out focus-visible:translate-y-0"
+			href="#tresc">{t.ui.skip}</a
+		>
+		<Nav lang={lang} page={page} />
+		<main id="tresc">
+			<slot />
+		</main>
+		<Footer lang={lang} />
+		<ToTop lang={lang} />
+		<script>
+			import '../scripts/motion.ts';
+		</script>
 	</body>
 </html>
-
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>

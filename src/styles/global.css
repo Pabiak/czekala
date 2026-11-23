@@ -1,0 +1,238 @@
+@import 'tailwindcss';
+
+/* ---------- Design tokens ----------
+   Paper, moss and forest: a naturalist's notebook, not an "eco" template.
+   Each token becomes Tailwind utilities (bg-paper, text-forest, border-line, font-serif, text-h2, ease-out…). */
+@theme {
+	--color-paper: #edebe4;
+	--color-paper-2: #e2dfd5;
+	--color-paper-3: #f6f5f0;
+	--color-ink: #1b241e;
+	--color-ink-2: #47504a;
+	--color-forest: #2c5a3c;
+	--color-forest-ink: #1f4530;
+	--color-moss: #a8c49a;
+	--color-moss-light: #c9ddbe;
+	--color-night: #18221c;
+	--color-on-night: #ecebe3;
+	--color-on-night-2: #b9c0b6;
+	--color-line: rgb(27 36 30 / 0.16);
+	--color-line-strong: rgb(27 36 30 / 0.32);
+	--color-line-night: rgb(236 235 227 / 0.16);
+
+	--font-serif: var(--font-newsreader), Georgia, serif;
+	--font-sans: var(--font-hanken), system-ui, sans-serif;
+
+	/* Type scale: display sizes cap at 6rem, tracking never tighter than -0.04em. */
+	--text-display: clamp(3rem, 7.4vw, 6rem);
+	--text-display--line-height: 0.98;
+	--text-display--letter-spacing: -0.035em;
+	--text-h2: clamp(2.5rem, 6vw, 4.5rem);
+	--text-h2--line-height: 1.08;
+	--text-h2--letter-spacing: -0.02em;
+	--text-big: clamp(2.75rem, 7vw, 5.5rem);
+	--text-big--line-height: 1;
+	--text-big--letter-spacing: -0.035em;
+	--text-stat: clamp(3rem, 8vw, 6rem);
+	--text-stat--line-height: 1;
+	--text-stat--letter-spacing: -0.04em;
+	--text-term: clamp(1.75rem, 3vw, 2.25rem);
+	--text-term--line-height: 1.1;
+	--text-term--letter-spacing: -0.02em;
+	--text-lead: clamp(1.1875rem, 1.6vw, 1.375rem);
+	--text-lead--line-height: 1.5;
+	--text-label: 0.8125rem;
+	--text-label--line-height: 1.5;
+	--text-label--letter-spacing: 0.12em;
+
+	--radius-md: 6px;
+
+	--ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+	--ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+	--breakpoint-2xs: 360px;
+	--breakpoint-xs: 480px;
+	--breakpoint-ml: 900px;
+
+	--animate-enter: enter 700ms var(--ease-out) both;
+
+	@keyframes enter {
+		from {
+			opacity: 0;
+			transform: translateY(10px);
+		}
+	}
+}
+
+/* Layout values reused through `(--x)` utilities, e.g. py-(--section-y). */
+:root {
+	--wrap: 1280px;
+	--gutter: clamp(16px, 4vw, 40px);
+	--section-y: clamp(72px, 11vw, 144px);
+	--nav-h: 64px;
+	color-scheme: light;
+}
+
+/* ---------- Base ---------- */
+@layer base {
+	html {
+		-webkit-text-size-adjust: 100%;
+		scrollbar-color: var(--color-line-strong) var(--color-paper);
+		scroll-padding-top: calc(var(--nav-h) + 16px);
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		html {
+			scroll-behavior: smooth;
+		}
+	}
+
+	body {
+		background: var(--color-paper);
+		color: var(--color-ink);
+		font-family: var(--font-sans);
+		font-size: 1.0625rem;
+		line-height: 1.6;
+		-webkit-font-smoothing: antialiased;
+		text-rendering: optimizeLegibility;
+	}
+
+	h1,
+	h2,
+	h3 {
+		font-family: var(--font-serif);
+		font-weight: 400;
+		line-height: 1.08;
+		letter-spacing: -0.02em;
+		text-wrap: balance;
+	}
+
+	p,
+	dd,
+	li {
+		text-wrap: pretty;
+	}
+
+	::selection {
+		background: var(--color-moss);
+		color: var(--color-ink);
+	}
+
+	:focus-visible {
+		outline: 2px solid var(--color-forest);
+		outline-offset: 3px;
+		border-radius: 2px;
+	}
+
+	.on-night :focus-visible {
+		outline-color: var(--color-moss);
+	}
+}
+
+/* ---------- Shared building blocks ---------- */
+@utility wrap {
+	width: 100%;
+	max-width: calc(var(--wrap) + 2 * var(--gutter));
+	margin-inline: auto;
+	padding-inline: var(--gutter);
+}
+
+/* Underline that draws away on hover (one link look for the whole site). */
+@utility link {
+	color: var(--color-forest-ink);
+	text-decoration: none;
+	background-image: linear-gradient(currentColor, currentColor);
+	background-size: 100% 1px;
+	background-position: 0 100%;
+	background-repeat: no-repeat;
+	transition: background-size 240ms var(--ease-out);
+
+	@media (hover: hover) and (pointer: fine) {
+		&:hover {
+			background-size: 0% 1px;
+			background-position: 100% 100%;
+		}
+	}
+}
+
+@utility btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	min-height: 48px;
+	padding: 12px 22px;
+	border-radius: 999px;
+	border: 1px solid transparent;
+	font: 500 1rem/1.2 var(--font-sans);
+	text-decoration: none;
+	cursor: pointer;
+	transition:
+		transform 160ms var(--ease-out),
+		background-color 200ms var(--ease-out),
+		border-color 200ms var(--ease-out),
+		color 200ms var(--ease-out);
+
+	&:active {
+		transform: scale(0.97);
+	}
+
+	& .arrow {
+		transition: transform 200ms var(--ease-out);
+	}
+
+	@media (hover: hover) and (pointer: fine) {
+		&:hover .arrow {
+			transform: translateX(3px);
+		}
+	}
+}
+
+@utility btn-primary {
+	background: var(--color-forest);
+	color: var(--color-paper-3);
+
+	@media (hover: hover) and (pointer: fine) {
+		&:hover {
+			background: var(--color-forest-ink);
+		}
+	}
+}
+
+@utility btn-ghost {
+	border-color: var(--color-line-strong);
+	color: var(--color-ink);
+
+	@media (hover: hover) and (pointer: fine) {
+		&:hover {
+			border-color: var(--color-ink);
+		}
+	}
+}
+
+/* ---------- Motion ----------
+   Content is visible by default. The hidden start state only applies once JS has
+   confirmed motion is allowed (html.motion), so no-JS and reduced-motion users
+   always see everything. */
+@layer components {
+	html.motion [data-reveal] {
+		opacity: 0;
+		transform: translateY(12px);
+		transition:
+			opacity 600ms var(--ease-out),
+			transform 600ms var(--ease-out);
+		transition-delay: var(--d, 0ms);
+	}
+
+	html.motion [data-reveal].is-in {
+		opacity: 1;
+		transform: none;
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		[data-enter] {
+			animation: var(--animate-enter);
+			animation-delay: var(--d, 0ms);
+		}
+	}
+}

@@ -1,0 +1,75 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Arrow from './Arrow.astro';
+import { site } from '../data/site';
+import { ui, routes, slugify, type Lang } from '../i18n/ui';
+
+interface Props {
+	lang: Lang;
+}
+const { lang } = Astro.props;
+const c = ui[lang];
+const t = c.glossary;
+const r = routes[lang];
+
+const entries = Object.values(t.entries).sort((a, b) => a.term.localeCompare(b.term, lang));
+const schema = [
+	{
+		'@context': 'https://schema.org',
+		'@type': 'DefinedTermSet',
+		name: t.heading,
+		inLanguage: lang,
+		url: new URL(r.glossary, site.url).href,
+		author: { '@id': `${site.url}/#person` },
+		hasDefinedTerm: entries.map((e) => ({
+			'@type': 'DefinedTerm',
+			name: e.term,
+			description: e.definition,
+		})),
+	},
+];
+---
+
+<Layout lang={lang} page="glossary" title={c.meta.glossaryTitle} schema={schema}>
+	<section class="pt-[clamp(32px,6vw,72px)] pb-(--section-y)" aria-labelledby="dict-title">
+		<div class="wrap">
+			<header class="mb-[clamp(40px,6vw,72px)] grid gap-4">
+				<a
+					class="inline-flex min-h-11 items-center gap-2 justify-self-start text-[0.9375rem] font-medium text-forest-ink"
+					href={`${r.home}#${r.anchors.glossary}`}><Arrow direction="left" /> <span class="link">{t.back}</span></a
+				>
+				<h1 id="dict-title" class="text-[clamp(3.25rem,9vw,6rem)] leading-[0.95] tracking-[-0.04em]" data-enter>
+					{t.heading}
+				</h1>
+				<nav aria-label={t.indexLabel} data-enter style="--d: 80ms">
+					<ul class="flex max-w-[72ch] flex-wrap gap-x-5 gap-y-1">
+						{
+							entries.map((e) => (
+								<li>
+									<a class="link inline-block py-1.5" href={`#${slugify(e.term)}`}>
+										{e.term}
+									</a>
+								</li>
+							))
+						}
+					</ul>
+				</nav>
+			</header>
+
+			<dl class="border-t border-line-strong">
+				{
+					entries.map((e) => (
+						<div
+							class="grid gap-3 border-b border-line py-7 ml:grid-cols-12 ml:items-baseline ml:gap-6"
+							id={slugify(e.term)}
+							data-reveal
+						>
+							<dt class="font-serif text-term ml:col-span-5">{e.term}</dt>
+							<dd class="max-w-[62ch] text-ink-2 ml:col-start-6 ml:col-end-13">{e.definition}</dd>
+						</div>
+					))
+				}
+			</dl>
+		</div>
+	</section>
+</Layout>

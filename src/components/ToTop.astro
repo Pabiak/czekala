@@ -1,0 +1,21 @@
+---
+import Arrow from './Arrow.astro';
+import { ui, type Lang } from '../i18n/ui';
+
+interface Props {
+	lang: Lang;
+}
+const t = ui[Astro.props.lang];
+---
+
+<!-- Ships `hidden`; motion.ts reveals it (JS-only control) and toggles .is-visible after one screen of scroll.
+     `invisible` keeps it out of the tab order while faded out. -->
+<button
+	class="invisible fixed right-[max(16px,env(safe-area-inset-right))] bottom-[max(16px,env(safe-area-inset-bottom))] z-40 grid size-12 translate-y-2 cursor-pointer place-items-center rounded-full border border-line-strong bg-paper/90 text-ink opacity-0 backdrop-blur-sm transition-[opacity,translate,scale,visibility,background-color,border-color,color] duration-200 ease-out hover:border-forest hover:bg-forest hover:text-paper-3 active:scale-95 motion-reduce:translate-y-0 [&.is-visible]:visible [&.is-visible]:translate-y-0 [&.is-visible]:opacity-100"
+	type="button"
+	aria-label={t.ui.toTop}
+	data-to-top
+	hidden
+>
+	<Arrow direction="up" />
+</button>
