@@ -19,9 +19,13 @@ const langNames: Record<Lang, string> = { pl: 'Polski', en: 'English' };
 <!--
   JS (src/scripts/motion.ts) toggles .is-scrolled, .is-hidden and .is-open on the header;
   the classes below react to them through [&.x]: and group-[.x]: variants.
+
+  The frosted background lives on ::before, never on the header itself: a backdrop-filter or a
+  non-`none` translate on the header would become the containing block of the fixed mobile menu
+  and squeeze it into the 64px bar. For the same reason the open state forces `translate: none`.
 -->
 <header
-	class="group sticky top-0 z-50 h-(--nav-h) border-b border-transparent bg-paper/86 backdrop-blur-md backdrop-saturate-140 transition-[transform,border-color] duration-280 ease-out [&.is-hidden]:-translate-y-full [&.is-scrolled]:border-line max-md:[&.is-open]:translate-y-0! max-md:[&.is-open]:bg-paper max-md:[&.is-open]:backdrop-blur-none"
+	class="group sticky top-0 z-50 h-(--nav-h) border-b border-transparent transition-[translate,border-color] duration-280 ease-out before:absolute before:inset-0 before:-z-1 before:bg-paper/86 before:backdrop-blur-md before:backdrop-saturate-140 [&.is-hidden]:-translate-y-full [&.is-scrolled]:border-line max-md:[&.is-open]:translate-none!"
 	data-nav
 >
 	<div class="wrap flex h-full items-center gap-[clamp(16px,3vw,40px)] max-md:gap-1">
