@@ -45,6 +45,10 @@ The package manager is **pnpm**, and the project needs Node `>=22.23.4`. There i
   - **JS state classes:** `is-open`, `is-hidden`, `is-scrolled` and `is-visible` are styled in markup through `[&.is-x]:` and `group-[.is-open]:` variants.
 - **Fonts:** configured with the Astro Fonts API in `astro.config.mjs` and self-hosted as `--font-newsreader` (400 only) and `--font-hanken`. Tailwind's `--font-serif` and `--font-sans` point at them, so don't rename those Astro variables to `--font-serif` or `--font-sans`.
 - **Images:** they live in `src/assets/` and are rendered through `<Image />` from `astro:assets`. `czekala3.webp` was a WebP misnamed `.jpg` on the old site.
+- **Date-dependent values:** these stay current without a rebuild.
+  - Years of experience come from `experienceSince` (2009) in `src/data/site.ts`, through `[data-since]` and the plural forms in `[data-plural]`.
+  - The footer year is `[data-current-year]`.
+  - The build writes the values for its own year as a no-JS fallback. `motion.ts` recomputes them on every page load.
 - **Motion:** `src/scripts/motion.ts` is the only JS, with no dependencies. It handles the mobile menu, hide-on-scroll-down nav, one-time `[data-reveal]` entrances and `[data-count]` counters inside `[data-counters]`. Reveal start states apply only under `html.motion`, which an inline head script adds when motion is allowed. Content stays visible without JS and under reduced motion. The hero uses the CSS-only `[data-enter]`.
 
 ## Design rules (from the impeccable / taste-skill reviews)

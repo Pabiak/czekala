@@ -10,7 +10,7 @@ const year = new Date().getFullYear();
 
 <footer class="border-t border-line text-[0.9375rem] text-ink-2">
 	<div class="wrap flex flex-wrap justify-between gap-x-6 gap-y-2 py-7">
-		<p>&copy; {year} Wojciech Czekała</p>
+		<p>&copy; <span data-current-year>{year}</span> Wojciech Czekała</p>
 		<p>
 			{t.ui.madeBy}{' '}<a class="link text-ink!" href="https://piotrlabiak.pl" target="_blank" rel="noopener"
 				>Piotr Łabiak <span class="sr-only">{t.ui.newTab}</span></a

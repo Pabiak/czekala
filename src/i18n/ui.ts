@@ -66,6 +66,13 @@ const pl = {
 	},
 	stats: {
 		heading: 'Dorobek w liczbach',
+		/** Plural forms for the years-of-experience label, keyed by Intl.PluralRules category. */
+		yearsPlural: {
+			one: 'rok doświadczenia',
+			few: 'lata doświadczenia',
+			many: 'lat doświadczenia',
+			other: 'lat doświadczenia',
+		} as Record<string, string>,
 		labels: [
 			'lat doświadczenia',
 			'projektów komercyjnych',
@@ -233,6 +240,10 @@ const en: Content = {
 	},
 	stats: {
 		heading: 'Track record in numbers',
+		yearsPlural: {
+			one: 'year of experience',
+			other: 'years of experience',
+		},
 		labels: [
 			'years of experience',
 			'commercial projects',

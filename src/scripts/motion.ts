@@ -1,8 +1,40 @@
 // Small, dependency-free interaction layer:
+// - values that depend on today's date (so a static build never goes stale)
 // - mobile menu, hide-on-scroll-down nav
 // - one-time section reveal and stat counters (skipped under reduced motion)
 
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+const locale = document.documentElement.lang === 'en' ? 'en-GB' : 'pl-PL';
+const fmt = new Intl.NumberFormat(locale);
+
+/* ---------- Date-dependent values ----------
+   The build writes the values for its own year; recompute them for the visitor's year.
+   Runs before the counters read data-count, so they count up to the fresh number. */
+const thisYear = new Date().getFullYear();
+const pluralRules = new Intl.PluralRules(locale);
+
+document.querySelectorAll<HTMLElement>('[data-since]').forEach((el) => {
+	const value = thisYear - Number(el.dataset.since);
+	if (!Number.isFinite(value) || value < 0) return;
+	el.dataset.count = String(value);
+	el.textContent = fmt.format(value);
+
+	// Matching label with the right plural form ("17 lat", "22 lata", "1 year"…).
+	const label = el.closest('li')?.querySelector<HTMLElement>('[data-plural]');
+	if (label) {
+		try {
+			const forms = JSON.parse(label.dataset.plural ?? '{}') as Record<string, string>;
+			const text = forms[pluralRules.select(value)] ?? forms.other;
+			if (text) label.textContent = text;
+		} catch {
+			/* keep the build-time label */
+		}
+	}
+});
+
+document.querySelectorAll<HTMLElement>('[data-current-year]').forEach((el) => {
+	el.textContent = String(thisYear);
+});
 
 /* ---------- Navigation ---------- */
 const nav = document.querySelector<HTMLElement>('[data-nav]');
@@ -76,7 +108,6 @@ onScroll();
 
 /* ---------- Reveal + counters ---------- */
 const easeOutExpo = (t: number) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t));
-const fmt = new Intl.NumberFormat(document.documentElement.lang === 'en' ? 'en-GB' : 'pl-PL');
 
 function runCounter(el: HTMLElement) {
 	const target = Number(el.dataset.count);

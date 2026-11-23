@@ -7,6 +7,8 @@ interface Props {
 }
 const c = ui[Astro.props.lang];
 const fmt = new Intl.NumberFormat(c.numberLocale);
+const plural = new Intl.PluralRules(c.numberLocale);
+const yearsLabel = (n: number) => c.stats.yearsPlural[plural.select(n)] ?? c.stats.yearsPlural.other;
 ---
 
 <section class="on-night bg-night py-[clamp(64px,9vw,120px)] text-on-night" aria-labelledby="stats-title">
@@ -18,11 +20,16 @@ const fmt = new Intl.NumberFormat(c.numberLocale);
 				stats.map((s, i) => (
 					<li class="grid content-start gap-2 border-b border-line-night pt-[clamp(20px,3vw,36px)] pr-4 pb-[clamp(24px,3vw,40px)] max-ml:even:border-l max-ml:even:pl-4 ml:[&:not(:nth-child(3n+1))]:border-l ml:[&:not(:nth-child(3n+1))]:pl-[clamp(20px,3vw,40px)]">
 						<p class="font-serif text-stat whitespace-nowrap tabular-nums lining-nums">
-							<span data-count={s.value}>{fmt.format(s.value)}</span>
+							<span data-count={s.value} data-since={s.since}>
+								{fmt.format(s.value)}
+							</span>
 							{s.suffix && <span class="ml-[0.04em] text-moss">{s.suffix}</span>}
 						</p>
-						<p class="max-w-[22ch] text-[clamp(0.9375rem,1.2vw,1.0625rem)] leading-[1.4] text-on-night-2">
-							{c.stats.labels[i]}
+						<p
+							class="max-w-[22ch] text-[clamp(0.9375rem,1.2vw,1.0625rem)] leading-[1.4] text-on-night-2"
+							data-plural={s.since ? JSON.stringify(c.stats.yearsPlural) : undefined}
+						>
+							{s.since ? yearsLabel(s.value) : c.stats.labels[i]}
 						</p>
 					</li>
 				))
