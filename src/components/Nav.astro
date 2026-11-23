@@ -25,7 +25,7 @@ const langNames: Record<Lang, string> = { pl: 'Polski', en: 'English' };
   and squeeze it into the 64px bar. For the same reason the open state forces `translate: none`.
 -->
 <header
-	class="group sticky top-0 z-50 h-(--nav-h) border-b border-transparent transition-[translate,border-color] duration-280 ease-out before:absolute before:inset-0 before:-z-1 before:bg-paper/86 before:backdrop-blur-md before:backdrop-saturate-140 [&.is-hidden]:-translate-y-full [&.is-scrolled]:border-line max-md:[&.is-open]:translate-none!"
+	class="group sticky top-0 z-50 h-(--nav-h) border-b border-transparent transition-[translate,border-color] duration-280 ease-out before:absolute before:inset-0 before:-z-1 before:bg-paper/86 before:backdrop-blur-md before:backdrop-saturate-140 [&.is-hidden]:-translate-y-full [&.is-scrolled]:border-line max-md:[&.is-open]:translate-none! max-md:[&.is-open]:border-line max-md:[&.is-open]:before:bg-paper"
 	data-nav
 >
 	<div class="wrap flex h-full items-center gap-[clamp(16px,3vw,40px)] max-md:gap-1">
@@ -39,17 +39,17 @@ const langNames: Record<Lang, string> = { pl: 'Polski', en: 'English' };
 		</a>
 
 		<nav
-			class="max-md:invisible max-md:fixed max-md:inset-0 max-md:z-1 max-md:flex max-md:items-center max-md:bg-paper max-md:px-(--gutter) max-md:pt-[calc(var(--nav-h)+24px)] max-md:pb-12 max-md:opacity-0 max-md:transition-[opacity,visibility] max-md:duration-240 max-md:ease-out max-md:group-[.is-open]:visible max-md:group-[.is-open]:opacity-100"
+			class="max-md:invisible max-md:absolute max-md:inset-x-0 max-md:top-full max-md:-translate-y-2 max-md:border-b max-md:border-line max-md:bg-paper max-md:px-(--gutter) max-md:pb-4 max-md:opacity-0 max-md:shadow-[0_16px_32px_-16px_rgb(27_36_30/0.25)] max-md:transition-[opacity,translate,visibility] max-md:duration-200 max-md:ease-out max-md:motion-reduce:translate-y-0 max-md:group-[.is-open]:visible max-md:group-[.is-open]:translate-y-0 max-md:group-[.is-open]:opacity-100"
 			id="menu"
 			aria-label={t.ui.navLabel}
 			data-nav-menu
 		>
-			<ul class="flex gap-[clamp(20px,3vw,40px)] max-md:w-full max-md:flex-col max-md:gap-2">
+			<ul class="flex gap-[clamp(20px,3vw,40px)] max-md:flex-col max-md:gap-0">
 				{
 					items.map((item) => (
-						<li>
+						<li class="max-md:border-b max-md:border-line max-md:last:border-b-0">
 							<a
-								class="relative inline-block py-3 text-[0.9375rem] font-medium after:absolute after:inset-x-0 after:bottom-2 after:h-px after:origin-right after:scale-x-0 after:bg-current after:transition-transform after:duration-240 after:ease-out hover:after:origin-left hover:after:scale-x-100 max-md:py-2 max-md:font-serif max-md:text-[2.5rem] max-md:font-normal max-md:tracking-[-0.02em] max-md:after:hidden"
+								class="relative inline-block py-3 text-[0.9375rem] font-medium after:absolute after:inset-x-0 after:bottom-2 after:h-px after:origin-right after:scale-x-0 after:bg-current after:transition-transform after:duration-240 after:ease-out hover:after:origin-left hover:after:scale-x-100 max-md:block max-md:py-3.5 max-md:font-serif max-md:text-[1.625rem] max-md:font-normal max-md:tracking-[-0.015em] max-md:after:hidden"
 								href={item.href}
 							>
 								{item.label}

@@ -42,18 +42,28 @@ const toggle = document.querySelector<HTMLButtonElement>('[data-nav-toggle]');
 const toggleLabel = document.querySelector<HTMLElement>('[data-nav-label]');
 const menu = document.querySelector<HTMLElement>('[data-nav-menu]');
 
+// Mobile menu is a panel that drops down under the bar; the page stays scrollable,
+// so the panel closes on a link, Escape, a tap outside, or once the page scrolls.
+let menuOpenedAtY = 0;
+const isMenuOpen = () => !!nav?.classList.contains('is-open');
+
 function setMenu(open: boolean) {
 	if (!nav || !toggle) return;
 	nav.classList.toggle('is-open', open);
 	toggle.setAttribute('aria-expanded', String(open));
 	if (toggleLabel) toggleLabel.textContent = (open ? toggle.dataset.labelClose : toggle.dataset.labelOpen) ?? '';
-	document.documentElement.style.overflow = open ? 'hidden' : '';
-	if (open) document.querySelector('[data-to-top]')?.classList.remove('is-visible');
+	if (open) {
+		menuOpenedAtY = scrollY;
+		document.querySelector('[data-to-top]')?.classList.remove('is-visible');
+	}
 }
 
-toggle?.addEventListener('click', () => setMenu(toggle.getAttribute('aria-expanded') !== 'true'));
+toggle?.addEventListener('click', () => setMenu(!isMenuOpen()));
 menu?.addEventListener('click', (e) => {
 	if ((e.target as HTMLElement).closest('a')) setMenu(false);
+});
+document.addEventListener('click', (e) => {
+	if (isMenuOpen() && !nav?.contains(e.target as Node)) setMenu(false);
 });
 document.addEventListener('keydown', (e) => {
 	if (e.key === 'Escape' && nav?.classList.contains('is-open')) {
@@ -81,7 +91,8 @@ let lastY = scrollY;
 let ticking = false;
 function onScroll() {
 	const y = scrollY;
-	toTop?.classList.toggle('is-visible', y > innerHeight && !nav?.classList.contains('is-open'));
+	if (isMenuOpen() && Math.abs(y - menuOpenedAtY) > 24) setMenu(false);
+	toTop?.classList.toggle('is-visible', y > innerHeight && !isMenuOpen());
 	if (nav) {
 		nav.classList.toggle('is-scrolled', y > 8);
 		const goingDown = y > lastY + 4;
