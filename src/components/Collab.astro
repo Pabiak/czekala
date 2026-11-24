@@ -1,0 +1,70 @@
+---
+import { ui, routes, type Lang } from '../i18n/ui';
+import Arrow from './Arrow.astro';
+
+interface Props {
+	lang: Lang;
+}
+const { lang } = Astro.props;
+const t = ui[lang].collab;
+const r = routes[lang];
+---
+
+<!--
+  Expert positioning, deliberately not a sales page (client's explicit wish, to avoid a conflict
+  of interest with his university): no prices, no hard sell, a soft link to contact.
+  Two parts: a forest band with the statement, then the areas of collaboration on paper.
+-->
+<section id={r.anchors.collab} aria-labelledby="collab-title">
+	<div class="on-night bg-forest py-(--section-y) text-paper-3">
+		<div class="wrap grid gap-8 lg:grid-cols-12 lg:gap-6">
+			<div class="grid content-start gap-6 lg:col-span-7" data-reveal>
+				<h2 id="collab-title" class="text-h2">{t.heading}</h2>
+				<p class="font-serif text-[clamp(1.5rem,2.6vw,2.125rem)] leading-[1.25] tracking-[-0.015em] text-balance">
+					{t.lead}
+				</p>
+			</div>
+			<div class="grid content-end gap-5 lg:col-start-9 lg:col-end-13" data-reveal style="--d: 80ms">
+				<p class="text-paper-3/86">{t.text}</p>
+				<p class="text-paper-3/86">{t.invite}</p>
+				<a
+					class="mt-1 inline-flex min-h-11 items-center gap-2 justify-self-start font-medium text-paper-3 underline decoration-paper-3/40 decoration-1 underline-offset-[6px] transition-colors duration-200 ease-out hover:decoration-paper-3 [&_.arrow]:transition-transform [&_.arrow]:duration-200 [&_.arrow]:ease-out hover:[&_.arrow]:translate-x-[3px]"
+					href={`#${r.anchors.contact}`}
+				>
+					{t.cta} <Arrow />
+				</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="bg-paper-2 py-(--section-y)">
+		<div class="wrap">
+			<p class="mb-[clamp(40px,6vw,72px)] max-w-[44ch] text-lead text-ink-2" data-reveal>{t.intro}</p>
+
+			<div class="grid gap-[clamp(48px,7vw,88px)]">
+				{
+					t.groups.map((g) => (
+						<div class="grid gap-6 border-t border-line-strong pt-8 lg:grid-cols-12 lg:gap-6" data-reveal>
+							<h3 class="text-[clamp(1.75rem,3vw,2.5rem)] leading-[1.1] lg:col-span-4 lg:pr-6">{g.title}</h3>
+							<dl class="grid gap-x-10 gap-y-7 md:grid-cols-2 lg:col-span-8">
+								{g.items.map((item) => (
+									<div class="grid content-start gap-1.5">
+										<dt class="leading-[1.35] font-semibold text-ink">{item.title}</dt>
+										<dd class="text-[0.9375rem] leading-[1.55] text-ink-2">{item.desc}</dd>
+									</div>
+								))}
+							</dl>
+						</div>
+					))
+				}
+			</div>
+
+			<p
+				class="mt-[clamp(48px,7vw,88px)] border-t border-line-strong pt-6 text-[0.9375rem] leading-[1.55] text-ink-2"
+				data-reveal
+			>
+				<span class="block max-w-[90ch]">{t.note}</span>
+			</p>
+		</div>
+	</div>
+</section>

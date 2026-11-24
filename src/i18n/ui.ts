@@ -9,12 +9,12 @@ export const routes = {
 	pl: {
 		home: '/',
 		glossary: '/eko-slownik',
-		anchors: { about: 'o-mnie', science: 'dzialalnosc-naukowa', experience: 'doswiadczenie', glossary: 'ekoslownik', contact: 'kontakt' },
+		anchors: { about: 'o-mnie', science: 'dzialalnosc-naukowa', experience: 'doswiadczenie', glossary: 'ekoslownik', collab: 'wspolpraca', contact: 'kontakt' },
 	},
 	en: {
 		home: '/en/',
 		glossary: '/en/eco-glossary',
-		anchors: { about: 'about', science: 'research', experience: 'experience', glossary: 'eco-glossary', contact: 'contact' },
+		anchors: { about: 'about', science: 'research', experience: 'experience', glossary: 'eco-glossary', collab: 'collaboration', contact: 'contact' },
 	},
 } as const;
 
@@ -55,7 +55,7 @@ const pl = {
 		newTab: '(otwiera się w nowej karcie)',
 		madeBy: 'Realizacja:',
 	},
-	nav: { about: 'O mnie', glossary: 'Ekosłownik', contact: 'Kontakt' },
+	nav: { about: 'O mnie', glossary: 'Ekosłownik', collab: 'Współpraca', contact: 'Kontakt' },
 	hero: {
 		title: 'Ekspert w ekologicznym postępie',
 		sub: 'Zbudujmy razem przyszłość',
@@ -76,10 +76,10 @@ const pl = {
 		labels: [
 			'lat doświadczenia',
 			'projektów komercyjnych',
-			'godzin szkoleń i wykładów',
-			'prac twórczych',
+			'godzin wykładów i szkoleń',
+			'recenzowanych prac twórczych',
 			'artykułów z listy filadelfijskiej',
-			'prelekcji na konferencjach',
+			'prelekcji na konferencjach naukowych i branżowych',
 		],
 	},
 	about: {
@@ -105,15 +105,17 @@ const pl = {
 	},
 	science: {
 		heading: 'Działalność naukowa',
-		lead: 'Napisałem lub pracowałem jako współautor przy ponad 170 publikacjach naukowych, w tym ponad 50 opublikowanych w czasopismach znajdujących się na liście filadelfijskiej.',
-		rankYears: '2022–2026',
+		lead: 'Napisałem lub pracowałem jako współautor przy ponad 200 publikacjach naukowych, w tym ponad 80 opublikowanych w czasopismach znajdujących się na liście filadelfijskiej.',
+		rankYears: '2022–2025',
 		rankText:
-			'W latach 2022–2026 zostałem sklasyfikowany na liście 2% najbardziej wpływowych naukowców na świecie pod względem cytowań w literaturze naukowej. Ranking został przygotowany przez Uniwersytet Stanforda we współpracy z wydawnictwem Elsevier.',
+			'W latach 2022–2025 zostałem sklasyfikowany na liście 2% najbardziej wpływowych naukowców na świecie pod względem cytowań w literaturze naukowej. Ranking został przygotowany przez Uniwersytet Stanforda we współpracy z wydawnictwem Elsevier.',
 		journalsHeading: 'Najbardziej prestiżowe czasopisma, w których publikowałem',
 		booksHeading: 'Książki',
 		booksIntro:
-			'Potwierdzeniem mojej szerokiej działalności prowadzonej na arenie międzynarodowej są m.in. dwie książki.',
-		bookRoles: ['Autor książki', 'Edytor i współautor czterech rozdziałów'],
+			'Potwierdzeniem mojej szerokiej działalności prowadzonej na arenie międzynarodowej są m.in. trzy książki.',
+		bookRoles: ['Autor książki', 'Edytor i współautor czterech rozdziałów', 'Edytor i współautor pięciu rozdziałów'],
+		ecExpertLabel: 'Komisja Europejska',
+		ecExpert: 'Pełnię rolę eksperta Komisji Europejskiej.',
 	},
 	experience: {
 		heading: 'Doświadczenie',
@@ -141,6 +143,53 @@ const pl = {
 				text: 'Być może znasz mnie również z wielu wydarzeń branżowych, na których systematycznie występuję od 2011 roku.',
 			},
 		],
+	},
+	collab: {
+		// Expert positioning, deliberately not a sales page (no offer list with prices, no hard sell).
+		heading: 'Współpraca',
+		lead: 'Skuteczna transformacja energetyczna oraz nowoczesna gospodarka odpadami wymagają ścisłego połączenia rzetelnej wiedzy naukowej z praktyką rynkową.',
+		text: 'W swojej działalności łączę doświadczenie badawcze z doradztwem technologicznym, wspierając rozwój innowacyjnych projektów w obszarze bioenergii, biogazu oraz zagospodarowania biomasy.',
+		invite: 'Zapraszam do współpracy przedstawicieli środowiska akademickiego, studentów oraz partnerów z sektora gospodarczego i samorządowego.',
+		intro: 'Poniżej przedstawiam główne obszary, w których dzielę się swoją wiedzą oraz doświadczeniem eksperckim.',
+		groups: [
+			{
+				title: 'Dla naukowców',
+				items: [
+					{ title: 'Publikacje naukowe', desc: 'Wspólne przygotowanie artykułów naukowych w czasopismach o wysokim wskaźniku wpływu.' },
+					{ title: 'Projekty B+R', desc: 'Partnerstwo w aplikowaniu o granty krajowe i międzynarodowe oraz ich kompleksowa realizacja.' },
+					{ title: 'Staże naukowe i wyjazdy studyjne', desc: 'Organizacja oraz udział w wymianach wiedzy, stażach przemysłowych i wizytach studyjnych w ośrodkach badawczych.' },
+					{ title: 'Konsorcja badawczo-przemysłowe', desc: 'Inicjowanie i budowanie interdyscyplinarnych zespołów łączących świat nauki z partnerami z sektora gospodarczego.' },
+					{ title: 'Recenzje i oceny merytoryczne', desc: 'Przygotowywanie profesjonalnych ocen prac naukowych, wniosków grantowych oraz opracowań technologicznych.' },
+					{ title: 'Organizacja wydarzeń naukowo-technicznych', desc: 'Współpraca przy tworzeniu paneli dyskusyjnych, konferencji oraz specjalistycznych seminariów.' },
+				],
+			},
+			{
+				title: 'Dla studentów i doktorantów',
+				items: [
+					{ title: 'Opieka nad pracami inżynierskimi, magisterskimi i doktorskimi', desc: 'Prowadzenie tematów ukierunkowanych na realne wyzwania technologiczne i środowiskowe.' },
+					{ title: 'Wspólne publikacje i projekty B+R', desc: 'Włączanie studentów w realizację badań aplikacyjnych oraz przygotowywanie artykułów naukowych.' },
+					{ title: 'Udział w kołach naukowych i grantach', desc: 'Merytoryczne wsparcie w pozyskiwaniu grantów studenckich oraz w działaniach sekcji badawczych.' },
+					{ title: 'Przygotowanie do pracy w biznesie', desc: 'Nauka przekładania wyników badań na język korzyści biznesowych i przygotowywania analiz komercyjnych.' },
+					{ title: 'Łączenie z partnerami przemysłowymi', desc: 'Pomoc w znalezieniu staży, praktyk lub tematów prac w firmach współpracujących z otoczeniem gospodarczym.' },
+				],
+			},
+			{
+				title: 'Dla przedsiębiorstw',
+				items: [
+					{ title: 'Opinie, ekspertyzy, analizy i audyty', desc: 'Oceny merytoryczne technologii oraz audyty procesowe pozwalające zidentyfikować wyzwania i optymalizować koszty.' },
+					{ title: 'Koncepcje zagospodarowania biomasy, w tym odpadów i produktów ubocznych, bioodpadów komunalnych i osadów ściekowych', desc: 'Opracowywanie kompleksowych dokumentacji zgodnie z oczekiwaniami Zamawiającego.' },
+					{ title: 'Badania z zakresu odpadów, biomasy i biogazu', desc: 'Badania właściwości substratów oraz testy wydajnościowe na potrzeby instalacji biogazowych i kompostowni.' },
+					{ title: 'Projekty B+R dla przemysłu', desc: 'Tworzenie i wdrażanie innowacji procesowych oraz produktowych we współpracy z sektorem gospodarczym.' },
+					{ title: 'Przygotowanie warstwy naukowej / technologicznej / środowiskowej do wniosków i innych dokumentów', desc: 'Opracowywanie uzasadnienia merytorycznego do aplikacji o dofinansowania oraz dokumentacji środowiskowej.' },
+					{ title: 'Recenzje i oceny merytoryczne', desc: 'Przygotowywanie profesjonalnych ocen prac naukowych, wniosków grantowych oraz opracowań technologicznych.' },
+					{ title: 'Organizacja wydarzeń naukowo-technicznych', desc: 'Współpraca przy tworzeniu paneli dyskusyjnych, konferencji oraz specjalistycznych seminariów.' },
+					{ title: 'Szkolenia i warsztaty dla Kadry JST i Spółek', desc: 'Praktyczne szkolenia z zakresu m.in. metod przetwarzania odpadów i biomasy.' },
+					{ title: 'Doradztwo', desc: 'Bieżące konsultacje, wsparcie decyzyjne przy inwestycjach oraz stała opieka merytoryczna nad realizowanymi projektami.' },
+				],
+			},
+		],
+		cta: 'Przejdź do kontaktu',
+		note: 'W zależności od rodzaju, skali i specyfiki poszczególne projekty i działania realizowane są w ramach współpracy instytucjonalnej (uczelni macierzystej) lub w ramach indywidualnej praktyki eksperckiej.',
 	},
 	glossary: {
 		heading: 'Ekosłownik',
@@ -229,7 +278,7 @@ const en: Content = {
 		newTab: '(opens in a new tab)',
 		madeBy: 'Website by',
 	},
-	nav: { about: 'About me', glossary: 'Eco-glossary', contact: 'Contact' },
+	nav: { about: 'About me', glossary: 'Eco-glossary', collab: 'Collaboration', contact: 'Contact' },
 	hero: {
 		title: 'An expert in ecological progress',
 		sub: 'Let’s build the future together',
@@ -247,10 +296,10 @@ const en: Content = {
 		labels: [
 			'years of experience',
 			'commercial projects',
-			'hours of training and lectures',
-			'creative works',
+			'hours of lectures and training',
+			'peer-reviewed works',
 			'articles in JCR-indexed journals',
-			'conference talks',
+			'talks at scientific and industry conferences',
 		],
 	},
 	about: {
@@ -276,14 +325,16 @@ const en: Content = {
 	},
 	science: {
 		heading: 'Research',
-		lead: 'I have authored or co-authored more than 170 scientific publications, including more than 50 in journals indexed in the Journal Citation Reports (the so-called Philadelphia list).',
-		rankYears: '2022–2026',
+		lead: 'I have authored or co-authored more than 200 scientific publications, including more than 80 in journals indexed in the Journal Citation Reports (the so-called Philadelphia list).',
+		rankYears: '2022–2025',
 		rankText:
-			'From 2022 to 2026 I was ranked among the world’s top 2% most influential scientists by citations in the scientific literature. The ranking is prepared by Stanford University in cooperation with Elsevier.',
+			'From 2022 to 2025 I was ranked among the world’s top 2% most influential scientists by citations in the scientific literature. The ranking is prepared by Stanford University in cooperation with Elsevier.',
 		journalsHeading: 'The most prestigious journals I have published in',
 		booksHeading: 'Books',
-		booksIntro: 'My international work is reflected in, among others, two books.',
-		bookRoles: ['Author', 'Editor and co-author of four chapters'],
+		booksIntro: 'My international work is reflected in, among others, three books.',
+		bookRoles: ['Author', 'Editor and co-author of four chapters', 'Editor and co-author of five chapters'],
+		ecExpertLabel: 'European Commission',
+		ecExpert: 'I serve as an expert for the European Commission.',
 	},
 	experience: {
 		heading: 'Experience',
@@ -311,6 +362,52 @@ const en: Content = {
 				text: 'You may also know me from the many industry events where I have been speaking regularly since 2011.',
 			},
 		],
+	},
+	collab: {
+		heading: 'Collaboration',
+		lead: 'An effective energy transition and modern waste management require a close link between sound scientific knowledge and market practice.',
+		text: 'In my work I combine research experience with technology consulting, supporting the development of innovative projects in bioenergy, biogas and biomass management.',
+		invite: 'I welcome collaboration with members of the academic community, students, and partners from the business and local government sectors.',
+		intro: 'Below are the main areas in which I share my knowledge and expert experience.',
+		groups: [
+			{
+				title: 'For researchers',
+				items: [
+					{ title: 'Scientific publications', desc: 'Co-authoring research articles in high-impact journals.' },
+					{ title: 'R&D projects', desc: 'Partnering in applications for national and international grants and carrying the projects through.' },
+					{ title: 'Research internships and study visits', desc: 'Organising and taking part in knowledge exchanges, industrial internships and study visits to research centres.' },
+					{ title: 'Research–industry consortia', desc: 'Initiating and building interdisciplinary teams that bring science together with business partners.' },
+					{ title: 'Reviews and expert assessments', desc: 'Preparing professional assessments of scientific work, grant applications and technology studies.' },
+					{ title: 'Science and technology events', desc: 'Helping to create panel discussions, conferences and specialist seminars.' },
+				],
+			},
+			{
+				title: 'For students and PhD candidates',
+				items: [
+					{ title: 'Supervision of engineering, master’s and doctoral theses', desc: 'Topics focused on real technological and environmental challenges.' },
+					{ title: 'Joint publications and R&D projects', desc: 'Involving students in applied research and in writing scientific articles.' },
+					{ title: 'Student research groups and grants', desc: 'Substantive support in winning student grants and in the work of research sections.' },
+					{ title: 'Preparing for work in business', desc: 'Learning to translate research results into business benefits and to prepare commercial analyses.' },
+					{ title: 'Connecting with industry partners', desc: 'Help in finding internships, placements or thesis topics in companies working with the business community.' },
+				],
+			},
+			{
+				title: 'For companies',
+				items: [
+					{ title: 'Opinions, expert reports, analyses and audits', desc: 'Technology assessments and process audits that identify challenges and optimise costs.' },
+					{ title: 'Biomass management concepts, including waste and by-products, municipal bio-waste and sewage sludge', desc: 'Comprehensive documentation prepared to the client’s requirements.' },
+					{ title: 'Waste, biomass and biogas testing', desc: 'Analysis of substrate properties and performance tests for biogas plants and composting facilities.' },
+					{ title: 'R&D projects for industry', desc: 'Developing and implementing process and product innovations together with businesses.' },
+					{ title: 'Scientific, technological and environmental input for applications and other documents', desc: 'Preparing the substantive justification for funding applications and environmental documentation.' },
+					{ title: 'Reviews and expert assessments', desc: 'Preparing professional assessments of scientific work, grant applications and technology studies.' },
+					{ title: 'Science and technology events', desc: 'Helping to create panel discussions, conferences and specialist seminars.' },
+					{ title: 'Training and workshops for local government staff and municipal companies', desc: 'Practical training on, among other things, waste and biomass processing methods.' },
+					{ title: 'Advisory', desc: 'Ongoing consultations, decision support for investments and continuous expert supervision of projects.' },
+				],
+			},
+		],
+		cta: 'Go to contact',
+		note: 'Depending on their type, scale and specifics, individual projects and activities are carried out either through institutional cooperation (my home university) or as part of my individual expert practice.',
 	},
 	glossary: {
 		heading: 'Eco-glossary',

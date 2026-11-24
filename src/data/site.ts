@@ -25,10 +25,10 @@ export const experienceSince = 2009;
 export const stats: { value: number; suffix: string; since?: number }[] = [
 	{ value: new Date().getFullYear() - experienceSince, suffix: '', since: experienceSince },
 	{ value: 100, suffix: '+' },
-	{ value: 2000, suffix: '+' },
-	{ value: 170, suffix: '+' },
-	{ value: 50, suffix: '+' },
+	{ value: 2500, suffix: '+' },
+	{ value: 200, suffix: '+' },
 	{ value: 80, suffix: '+' },
+	{ value: 100, suffix: '+' },
 ];
 
 export const journals = [
@@ -51,5 +51,10 @@ export const books = [
 		year: '2024',
 		publisher: 'Wiley',
 		title: 'Biogas Plants – Waste Management, Energy Production, and Carbon Footprint Reduction',
+	},
+	{
+		year: '2026',
+		publisher: 'Elsevier',
+		title: 'Sustainable Bioenergy Production from Agricultural Biomass and Waste',
 	},
 ];

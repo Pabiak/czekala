@@ -10,7 +10,7 @@ The site is bilingual. Polish is at the root and English under `/en/` (`/en/`, `
 
 These must stay stable because they are live and indexed:
 - the URLs `/` and `/eko-slownik`,
-- the anchors `#o-mnie`, `#ekoslownik`, `#kontakt`,
+- the anchors `#o-mnie`, `#ekoslownik`, `#kontakt` (plus `#wspolpraca`, added later),
 - `public/blog/index.html` (redirect to blog.wojciechczekala.pl),
 - `public/czekala1.jpg` (the OG image URL),
 - the contact data.
@@ -29,6 +29,7 @@ The package manager is **pnpm**, and the project needs Node `>=22.23.4`. There i
 - **Copy:** every translatable string for both languages is in `src/i18n/ui.ts`. `ui.pl` defines the shape, and `ui.en: Content` must match it, so TypeScript flags a missing translation. The same file holds `routes`, the per-language paths and section anchor ids.
 - **Data:** `src/data/site.ts` holds language-independent data: contact details, stat values, journal names and book titles.
 - **Components:** every component takes a `lang` prop and reads `ui[lang]`. Never hardcode copy in a component.
+- **Collaboration section (`Collab.astro`):** it is expert positioning by the client's explicit wish, not a sales page, because of a possible conflict of interest with his university. Don't add offers, prices or sales calls to action there.
 - **Pages:** `src/pages/*` are one-line routes that render `HomePage` or `GlossaryPage` with a `lang`. To add a language, add it to `Lang`, `langs`, `routes` and `ui`, then add the route files.
 - **Layout:** `src/layouts/Layout.astro` owns the whole `<head>`. It takes `lang` and `page`, and from them builds:
   - the canonical URL and `hreflang` alternates (x-default is Polish),
