@@ -8,6 +8,8 @@ interface Props {
 const { lang } = Astro.props;
 const t = ui[lang].collab;
 const r = routes[lang];
+const plural = new Intl.PluralRules(ui[lang].numberLocale);
+const countLabel = (n: number) => t.countForms[plural.select(n)] ?? t.countForms.other;
 ---
 
 <!--
@@ -41,12 +43,26 @@ const r = routes[lang];
 		<div class="wrap">
 			<p class="mb-[clamp(40px,6vw,72px)] max-w-[44ch] text-lead text-ink-2" data-reveal>{t.intro}</p>
 
-			<div class="grid gap-[clamp(48px,7vw,88px)]">
+			<!-- Native disclosure panels: no JS, content stays in the HTML for search engines and
+			     find-in-page; `name` makes them exclusive so the section never unfolds to full length. -->
+			<div class="border-t border-line-strong">
 				{
-					t.groups.map((g) => (
-						<div class="grid gap-6 border-t border-line-strong pt-8 lg:grid-cols-12 lg:gap-6" data-reveal>
-							<h3 class="text-[clamp(1.75rem,3vw,2.5rem)] leading-[1.1] lg:col-span-4 lg:pr-6">{g.title}</h3>
-							<dl class="grid gap-x-10 gap-y-7 md:grid-cols-2 lg:col-span-8">
+					t.groups.map((g, i) => (
+						<details class="collab-acc group/acc border-b border-line-strong" name="collab-areas" data-reveal style={`--d: ${i * 60}ms`}>
+							<summary class="flex min-h-11 cursor-pointer list-none items-center gap-4 py-5 md:py-7 [&::-webkit-details-marker]:hidden">
+								<h3 class="grow text-[clamp(1.5rem,3vw,2.25rem)] leading-[1.1]">{g.title}</h3>
+								<span class="hidden text-[0.9375rem] text-ink-2 sm:inline">
+									{g.items.length} {countLabel(g.items.length)}
+								</span>
+								<span
+									class="relative grid size-11 shrink-0 place-items-center rounded-full border border-line-strong text-ink transition-[background-color,border-color,color] duration-200 ease-out group-hover/acc:border-ink group-open/acc:border-forest group-open/acc:bg-forest group-open/acc:text-paper-3"
+									aria-hidden="true"
+								>
+									<span class="absolute h-px w-3.5 bg-current" />
+									<span class="absolute h-3.5 w-px bg-current transition-transform duration-240 ease-out group-open/acc:scale-y-0" />
+								</span>
+							</summary>
+							<dl class="grid gap-x-10 gap-y-5 pb-8 md:grid-cols-2 md:gap-y-7 md:pb-10 lg:pl-[calc((100%+24px)/3)]">
 								{g.items.map((item) => (
 									<div class="grid content-start gap-1.5">
 										<dt class="leading-[1.35] font-semibold text-ink">{item.title}</dt>
@@ -54,13 +70,13 @@ const r = routes[lang];
 									</div>
 								))}
 							</dl>
-						</div>
+						</details>
 					))
 				}
 			</div>
 
 			<p
-				class="mt-[clamp(48px,7vw,88px)] border-t border-line-strong pt-6 text-[0.9375rem] leading-[1.55] text-ink-2"
+				class="mt-[clamp(32px,5vw,56px)] text-[0.9375rem] leading-[1.55] text-ink-2"
 				data-reveal
 			>
 				<span class="block max-w-[90ch]">{t.note}</span>

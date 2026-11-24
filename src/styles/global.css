@@ -229,6 +229,26 @@
 		transform: none;
 	}
 
+	/* Disclosure panels (Collab.astro): animate the height where the browser supports
+	   ::details-content + interpolate-size; elsewhere they simply open instantly. */
+	@media (prefers-reduced-motion: no-preference) {
+		:root {
+			interpolate-size: allow-keywords;
+		}
+
+		.collab-acc::details-content {
+			block-size: 0;
+			overflow-y: clip;
+			transition:
+				block-size 360ms var(--ease-out),
+				content-visibility 360ms allow-discrete;
+		}
+
+		.collab-acc[open]::details-content {
+			block-size: auto;
+		}
+	}
+
 	@media (prefers-reduced-motion: no-preference) {
 		[data-enter] {
 			animation: var(--animate-enter);

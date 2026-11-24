@@ -151,6 +151,8 @@ const pl = {
 		text: 'W swojej działalności łączę doświadczenie badawcze z doradztwem technologicznym, wspierając rozwój innowacyjnych projektów w obszarze bioenergii, biogazu oraz zagospodarowania biomasy.',
 		invite: 'Zapraszam do współpracy przedstawicieli środowiska akademickiego, studentów oraz partnerów z sektora gospodarczego i samorządowego.',
 		intro: 'Poniżej przedstawiam główne obszary, w których dzielę się swoją wiedzą oraz doświadczeniem eksperckim.',
+		/** Item-count label in each panel header, keyed by Intl.PluralRules category. */
+		countForms: { one: 'obszar', few: 'obszary', many: 'obszarów', other: 'obszaru' } as Record<string, string>,
 		groups: [
 			{
 				title: 'Dla naukowców',
@@ -369,6 +371,7 @@ const en: Content = {
 		text: 'In my work I combine research experience with technology consulting, supporting the development of innovative projects in bioenergy, biogas and biomass management.',
 		invite: 'I welcome collaboration with members of the academic community, students, and partners from the business and local government sectors.',
 		intro: 'Below are the main areas in which I share my knowledge and expert experience.',
+		countForms: { one: 'area', other: 'areas' },
 		groups: [
 			{
 				title: 'For researchers',
