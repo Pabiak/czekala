@@ -55,7 +55,7 @@ const pl = {
 		newTab: '(otwiera się w nowej karcie)',
 		madeBy: 'Realizacja:',
 	},
-	nav: { about: 'O mnie', glossary: 'Ekosłownik', contact: 'Kontakt' },
+	nav: { about: 'O mnie', glossary: 'Ekosłownik', blog: 'Blog', contact: 'Kontakt' },
 	hero: {
 		title: 'Ekspert w ekologicznym postępie',
 		sub: 'Zbudujmy razem przyszłość',
@@ -194,6 +194,20 @@ const pl = {
 			},
 		} satisfies Record<GlossaryKey, { term: string; definition: string }>,
 	},
+	blog: {
+		heading: 'Blog',
+		metaTitle: 'Blog – Wojciech Czekała',
+		description:
+			'Wpisy prof. Wojciecha Czekały o gospodarce odpadami, energetyce, odnawialnych źródłach energii, biopaliwach i gospodarce o obiegu zamkniętym.',
+		empty: 'Pierwsze wpisy pojawią się wkrótce.',
+		back: 'Wszystkie wpisy',
+		listLabel: 'Wpisy',
+		readMore: 'Czytaj wpis',
+		minutes: 'min czytania',
+		authorHeading: 'O autorze',
+		contactCta: 'Napisz do mnie',
+		rss: 'Kanał RSS',
+	},
 	contact: {
 		heading: 'Kontakt',
 		email: 'E-mail',
@@ -229,7 +243,7 @@ const en: Content = {
 		newTab: '(opens in a new tab)',
 		madeBy: 'Website by',
 	},
-	nav: { about: 'About me', glossary: 'Eco-glossary', contact: 'Contact' },
+	nav: { about: 'About me', glossary: 'Eco-glossary', blog: 'Blog', contact: 'Contact' },
 	hero: {
 		title: 'An expert in ecological progress',
 		sub: 'Let’s build the future together',
@@ -363,6 +377,20 @@ const en: Content = {
 					'The totality of living and non-living natural elements and the interactions between them. The concept of the environment also covers those of its elements that have been transformed by human activity.',
 			},
 		},
+	},
+	blog: {
+		heading: 'Blog',
+		metaTitle: 'Blog – Wojciech Czekała',
+		description:
+			'Posts by Prof. Wojciech Czekała on waste management, energy, renewable energy sources, biofuels and the circular economy.',
+		empty: 'The first posts are coming soon.',
+		back: 'All posts',
+		listLabel: 'Posts',
+		readMore: 'Read the post',
+		minutes: 'min read',
+		authorHeading: 'About the author',
+		contactCta: 'Email me',
+		rss: 'RSS feed',
 	},
 	contact: {
 		heading: 'Contact',

@@ -11,7 +11,6 @@ The site is bilingual. Polish is at the root and English under `/en/` (`/en/`, `
 These must stay stable because they are live and indexed:
 - the URLs `/` and `/eko-slownik`,
 - the anchors `#o-mnie`, `#ekoslownik`, `#kontakt`,
-- `public/blog/index.html` (redirect to blog.wojciechczekala.pl),
 - `public/czekala1.jpg` (the OG image URL),
 - the contact data.
 
@@ -37,7 +36,13 @@ The package manager is **pnpm**, and the project needs Node `>=22.23.4`. There i
   - the PL/EN switch in `Nav`, which links to the same page in the other language.
 
   Pages pass extra JSON-LD through the `schema` prop.
-- **Sitemap:** `public/sitemap.xml` is hand-written. Update it when you add pages.
+- **Blog:** Polish only, at `/blog` and `/blog/[slug]`, with `/blog/rss.xml`.
+  - Posts are written by the client in Sanity Studio (`studio/`, its own package and `pnpm install`) and fetched at build time in `src/lib/sanity.ts`. The site stays fully static.
+  - Images are served from Sanity's CDN. Portable Text is rendered by `@portabletext/to-html` and styled by the `prose-czekala` utility in `global.css` (Tailwind Typography).
+  - Configuration lives in `SANITY_PROJECT_ID` and `SANITY_DATASET` (see `.env.example`). Without them the production blog is empty, and `astro dev` shows a dev-only sample post.
+  - Publishing a post needs a rebuild and deploy (planned: a Sanity webhook triggers GitHub Actions, which builds and uploads to OVH).
+- **Language switch for one-language pages:** blog pages pass `path` instead of `page` to `Layout`, so they get no hreflang, and the language switch goes to the other language's home page.
+- **Sitemap:** `src/pages/sitemap.xml.ts` generates it at build time, including blog posts. Add new paired pages to its `paired` list.
 - **Styling:** Tailwind CSS v4 via `@tailwindcss/vite`, configured in CSS with no `tailwind.config`. Components use utility classes only; there are no scoped `<style>` blocks.
   - **Tokens:** defined in `@theme` in `src/styles/global.css`. They cover colors (`paper`, `ink`, `forest`, `moss`, `night`, `line`…), the type scale (`text-display`, `text-h2`, `text-big`, `text-stat`, `text-term`, `text-lead`, `text-label`), `ease-out` and the extra breakpoints `2xs` (360), `xs` (480) and `ml` (900).
   - **Layout variables:** `--gutter`, `--section-y` and `--nav-h` are plain `:root` variables, used as `py-(--section-y)`.

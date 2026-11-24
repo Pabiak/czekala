@@ -1,0 +1,97 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Arrow from '../../components/Arrow.astro';
+import { getPosts, imageUrl, imageSrcset, readingMinutes } from '../../lib/sanity';
+import { site } from '../../data/site';
+import { ui } from '../../i18n/ui';
+
+const t = ui.pl.blog;
+const posts = await getPosts();
+const date = new Intl.DateTimeFormat('pl-PL', { day: 'numeric', month: 'long', year: 'numeric' });
+
+const schema = [
+	{
+		'@context': 'https://schema.org',
+		'@type': 'Blog',
+		name: t.metaTitle,
+		description: t.description,
+		url: `${site.url}/blog`,
+		inLanguage: 'pl',
+		author: { '@id': `${site.url}/#person` },
+		blogPost: posts.map((p) => ({
+			'@type': 'BlogPosting',
+			headline: p.title,
+			url: `${site.url}/blog/${p.slug}`,
+			datePublished: p.publishedAt,
+		})),
+	},
+];
+---
+
+<Layout lang="pl" path="/blog" title={t.metaTitle} description={t.description} schema={schema}>
+	<section class="pt-[clamp(32px,6vw,72px)] pb-(--section-y)" aria-labelledby="blog-title">
+		<div class="wrap">
+			<header class="mb-[clamp(40px,6vw,72px)] grid gap-4 md:grid-cols-[1fr_auto] md:items-end">
+				<h1 id="blog-title" class="text-[clamp(3.25rem,9vw,6rem)] leading-[0.95] tracking-[-0.04em]" data-enter>
+					{t.heading}
+				</h1>
+				<a class="link justify-self-start text-[0.9375rem] font-medium" href="/blog/rss.xml">{t.rss}</a>
+			</header>
+
+			{
+				posts.length === 0 ? (
+					<p class="border-t border-line-strong pt-8 text-lead text-ink-2">{t.empty}</p>
+				) : (
+					<ol class="border-t border-line-strong" aria-label={t.listLabel}>
+						{posts.map((p, i) => (
+							<li
+								class="group/post relative grid gap-5 border-b border-line py-8 md:grid-cols-12 md:gap-6 md:py-10"
+								data-reveal
+								style={`--d: ${Math.min(i, 3) * 60}ms`}
+							>
+								<p class="text-[0.9375rem] font-semibold text-forest md:col-span-3">
+									<time datetime={p.publishedAt}>{date.format(new Date(p.publishedAt))}</time>
+									<span class="block font-normal text-ink-2">
+										{readingMinutes(p.body)} {t.minutes}
+									</span>
+								</p>
+
+								<div class="grid content-start gap-3 md:col-span-6">
+									<h2 class="font-serif text-[clamp(1.75rem,3vw,2.5rem)] leading-[1.12]">
+										{/* The link's ::after covers the whole row, so the entire entry is clickable. */}
+										<a
+											class="decoration-1 underline-offset-[6px] after:absolute after:inset-0 group-hover/post:underline"
+											href={`/blog/${p.slug}`}
+										>
+											{p.title}
+										</a>
+									</h2>
+									<p class="max-w-[60ch] text-ink-2">{p.excerpt}</p>
+									<span class="inline-flex items-center gap-2 text-[0.9375rem] font-medium text-forest-ink [&_.arrow]:transition-transform [&_.arrow]:duration-200 [&_.arrow]:ease-out group-hover/post:[&_.arrow]:translate-x-[3px]">
+										{t.readMore} <Arrow />
+									</span>
+								</div>
+
+								{p.mainImage?.asset && (
+									<div class="aspect-4/3 overflow-hidden rounded-md bg-paper-2 md:col-span-3 md:row-start-1 md:col-start-10">
+										<img
+											src={imageUrl(p.mainImage, 600, 450)}
+											srcset={imageSrcset(p.mainImage, [360, 600, 900], 4 / 3)}
+											sizes="(min-width: 768px) 22vw, 100vw"
+											alt={p.mainImage.alt ?? ''}
+											width="600"
+											height="450"
+											loading={i === 0 ? 'eager' : 'lazy'}
+											decoding="async"
+											class="size-full object-cover transition-transform duration-500 ease-out group-hover/post:scale-[1.03]"
+										/>
+									</div>
+								)}
+							</li>
+						))}
+					</ol>
+				)
+			}
+		</div>
+	</section>
+</Layout>
