@@ -1,17 +1,20 @@
 ---
-import { ui, routes, langs, type Lang, type PageKey } from '../i18n/ui';
+import { ui, routes, langs, type Lang } from '../i18n/ui';
 
 interface Props {
 	lang: Lang;
-	page: PageKey;
+	/** Where each language-switch link leads from the current page. */
+	switchHrefs: Record<Lang, string>;
 }
-const { lang, page } = Astro.props;
+const { lang, switchHrefs } = Astro.props;
 const t = ui[lang];
 const r = routes[lang];
 const items = [
 	{ href: `${r.home}#${r.anchors.about}`, label: t.nav.about },
 	{ href: `${r.home}#${r.anchors.glossary}`, label: t.nav.glossary },
 	{ href: `${r.home}#${r.anchors.collab}`, label: t.nav.collab },
+	// The knowledge base is Polish-only (the client writes in Polish).
+	...(lang === 'pl' ? [{ href: '/baza-wiedzy', label: t.nav.knowledge }] : []),
 	{ href: `${r.home}#${r.anchors.contact}`, label: t.nav.contact },
 ];
 const langNames: Record<Lang, string> = { pl: 'Polski', en: 'English' };
@@ -26,12 +29,12 @@ const langNames: Record<Lang, string> = { pl: 'Polski', en: 'English' };
   and squeeze it into the 64px bar. For the same reason the open state forces `translate: none`.
 -->
 <header
-	class="group sticky top-0 z-50 h-(--nav-h) border-b border-transparent transition-[translate,border-color] duration-280 ease-out before:absolute before:inset-0 before:-z-1 before:bg-paper/86 before:backdrop-blur-md before:backdrop-saturate-140 [&.is-hidden]:-translate-y-full [&.is-scrolled]:border-line max-md:[&.is-open]:translate-none! max-md:[&.is-open]:border-line max-md:[&.is-open]:before:bg-paper"
+	class="group sticky top-0 z-50 h-(--nav-h) border-b border-transparent transition-[translate,border-color] duration-280 ease-out before:absolute before:inset-0 before:-z-1 before:bg-paper/86 before:backdrop-blur-md before:backdrop-saturate-140 [&.is-hidden]:-translate-y-full [&.is-scrolled]:border-line max-ml:[&.is-open]:translate-none! max-ml:[&.is-open]:border-line max-ml:[&.is-open]:before:bg-paper"
 	data-nav
 >
-	<div class="wrap flex h-full items-center gap-[clamp(16px,3vw,40px)] max-md:gap-1">
+	<div class="wrap flex h-full items-center gap-[clamp(16px,3vw,40px)] max-ml:gap-1">
 		<a
-			class="relative z-2 mr-auto py-2.5 font-serif text-[1.3125rem] tracking-[-0.01em] whitespace-nowrap max-md:text-[1.1875rem]"
+			class="relative z-2 mr-auto py-2.5 font-serif text-[1.3125rem] tracking-[-0.01em] whitespace-nowrap max-ml:text-[1.1875rem]"
 			href={r.home}
 			aria-label={t.ui.brandLabel}
 			data-brand
@@ -40,17 +43,17 @@ const langNames: Record<Lang, string> = { pl: 'Polski', en: 'English' };
 		</a>
 
 		<nav
-			class="max-md:invisible max-md:absolute max-md:inset-x-0 max-md:top-full max-md:-translate-y-2 max-md:border-b max-md:border-line max-md:bg-paper max-md:px-(--gutter) max-md:pb-4 max-md:opacity-0 max-md:shadow-[0_16px_32px_-16px_rgb(27_36_30/0.25)] max-md:transition-[opacity,translate,visibility] max-md:duration-200 max-md:ease-out max-md:motion-reduce:translate-y-0 max-md:group-[.is-open]:visible max-md:group-[.is-open]:translate-y-0 max-md:group-[.is-open]:opacity-100"
+			class="max-ml:invisible max-ml:absolute max-ml:inset-x-0 max-ml:top-full max-ml:-translate-y-2 max-ml:border-b max-ml:border-line max-ml:bg-paper max-ml:px-(--gutter) max-ml:pb-4 max-ml:opacity-0 max-ml:shadow-[0_16px_32px_-16px_rgb(27_36_30/0.25)] max-ml:transition-[opacity,translate,visibility] max-ml:duration-200 max-ml:ease-out max-ml:motion-reduce:translate-y-0 max-ml:group-[.is-open]:visible max-ml:group-[.is-open]:translate-y-0 max-ml:group-[.is-open]:opacity-100"
 			id="menu"
 			aria-label={t.ui.navLabel}
 			data-nav-menu
 		>
-			<ul class="flex gap-[clamp(20px,3vw,40px)] max-md:flex-col max-md:gap-0">
+			<ul class="flex gap-[clamp(20px,3vw,40px)] max-ml:flex-col max-ml:gap-0">
 				{
 					items.map((item) => (
-						<li class="max-md:border-b max-md:border-line max-md:last:border-b-0">
+						<li class="max-ml:border-b max-ml:border-line max-ml:last:border-b-0">
 							<a
-								class="relative inline-block py-3 text-[0.9375rem] font-medium after:absolute after:inset-x-0 after:bottom-2 after:h-px after:origin-right after:scale-x-0 after:bg-current after:transition-transform after:duration-240 after:ease-out hover:after:origin-left hover:after:scale-x-100 max-md:block max-md:py-3.5 max-md:font-serif max-md:text-[1.625rem] max-md:font-normal max-md:tracking-[-0.015em] max-md:after:hidden"
+								class="relative inline-block py-3 text-[0.9375rem] font-medium after:absolute after:inset-x-0 after:bottom-2 after:h-px after:origin-right after:scale-x-0 after:bg-current after:transition-transform after:duration-240 after:ease-out hover:after:origin-left hover:after:scale-x-100 max-ml:block max-ml:py-3.5 max-ml:font-serif max-ml:text-[1.625rem] max-ml:font-normal max-ml:tracking-[-0.015em] max-ml:after:hidden"
 								href={item.href}
 							>
 								{item.label}
@@ -62,7 +65,7 @@ const langNames: Record<Lang, string> = { pl: 'Polski', en: 'English' };
 		</nav>
 
 		<ul
-			class="relative z-2 flex items-center border-l border-line-strong pl-[clamp(12px,2vw,24px)] max-md:pl-2"
+			class="relative z-2 flex items-center border-l border-line-strong pl-[clamp(12px,2vw,24px)] max-ml:pl-2"
 			aria-label={t.ui.langLabel}
 		>
 			{
@@ -70,7 +73,7 @@ const langNames: Record<Lang, string> = { pl: 'Polski', en: 'English' };
 					<li>
 						<a
 							class="grid min-h-11 min-w-9 place-items-center text-label font-semibold tracking-[0.08em] text-ink-2 transition-colors duration-200 ease-out hover:text-forest aria-[current=true]:text-ink aria-[current=true]:underline aria-[current=true]:decoration-1 aria-[current=true]:underline-offset-6"
-							href={routes[l][page]}
+							href={switchHrefs[l]}
 							hreflang={l}
 							lang={l}
 							aria-current={l === lang ? 'true' : undefined}
@@ -84,7 +87,7 @@ const langNames: Record<Lang, string> = { pl: 'Polski', en: 'English' };
 		</ul>
 
 		<button
-			class="group/toggle relative z-2 -mr-3 hidden size-12 cursor-pointer place-items-center text-ink max-md:grid"
+			class="group/toggle relative z-2 -mr-3 hidden size-12 cursor-pointer place-items-center text-ink max-ml:grid"
 			type="button"
 			aria-expanded="false"
 			aria-controls="menu"

@@ -55,7 +55,7 @@ const pl = {
 		newTab: '(otwiera się w nowej karcie)',
 		madeBy: 'Realizacja:',
 	},
-	nav: { about: 'O mnie', glossary: 'Ekosłownik', collab: 'Współpraca', contact: 'Kontakt' },
+	nav: { about: 'O mnie', glossary: 'Ekosłownik', collab: 'Współpraca', knowledge: 'Baza wiedzy', contact: 'Kontakt' },
 	hero: {
 		title: 'Ekspert w ekologicznym postępie',
 		sub: 'Zbudujmy razem przyszłość',
@@ -245,6 +245,20 @@ const pl = {
 			},
 		} satisfies Record<GlossaryKey, { term: string; definition: string }>,
 	},
+	knowledge: {
+		heading: 'Baza wiedzy',
+		metaTitle: 'Baza wiedzy – Wojciech Czekała',
+		description:
+			'Artykuły prof. Wojciecha Czekały o gospodarce odpadami, energetyce, odnawialnych źródłach energii, biogazie, biopaliwach i gospodarce o obiegu zamkniętym.',
+		empty: 'Pierwsze artykuły pojawią się wkrótce.',
+		back: 'Wszystkie artykuły',
+		listLabel: 'Artykuły',
+		readMore: 'Czytaj dalej',
+		minutes: 'min czytania',
+		authorHeading: 'O autorze',
+		contactCta: 'Napisz do mnie',
+		rss: 'Kanał RSS',
+	},
 	contact: {
 		heading: 'Kontakt',
 		email: 'E-mail',
@@ -280,7 +294,7 @@ const en: Content = {
 		newTab: '(opens in a new tab)',
 		madeBy: 'Website by',
 	},
-	nav: { about: 'About me', glossary: 'Eco-glossary', collab: 'Collaboration', contact: 'Contact' },
+	nav: { about: 'About me', glossary: 'Eco-glossary', collab: 'Collaboration', knowledge: 'Knowledge base', contact: 'Contact' },
 	hero: {
 		title: 'An expert in ecological progress',
 		sub: 'Let’s build the future together',
@@ -463,6 +477,20 @@ const en: Content = {
 					'The totality of living and non-living natural elements and the interactions between them. The concept of the environment also covers those of its elements that have been transformed by human activity.',
 			},
 		},
+	},
+	knowledge: {
+		heading: 'Knowledge base',
+		metaTitle: 'Knowledge base – Wojciech Czekała',
+		description:
+			'Articles by Prof. Wojciech Czekała on waste management, energy, renewable energy sources, biogas, biofuels and the circular economy.',
+		empty: 'The first articles are coming soon.',
+		back: 'All articles',
+		listLabel: 'Articles',
+		readMore: 'Read more',
+		minutes: 'min read',
+		authorHeading: 'About the author',
+		contactCta: 'Email me',
+		rss: 'RSS feed',
 	},
 	contact: {
 		heading: 'Contact',

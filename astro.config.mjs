@@ -5,6 +5,10 @@ import tailwindcss from '@tailwindcss/vite';
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://wojciechczekala.pl',
+	// /blog used to redirect to the old WordPress blog; old links now land on the knowledge base.
+	redirects: {
+		'/blog': '/baza-wiedzy',
+	},
 	vite: {
 		plugins: [tailwindcss()],
 	},

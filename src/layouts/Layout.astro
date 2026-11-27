@@ -7,21 +7,39 @@ import { site, contact } from '../data/site';
 import { ui, routes, langs, type Lang, type PageKey } from '../i18n/ui';
 import '../styles/global.css';
 
+interface OgImage {
+	url: string;
+	width: number;
+	height: number;
+	alt: string;
+}
+
 interface Props {
 	lang: Lang;
-	/** Which page this is; used for canonical, hreflang and the language switch. */
-	page: PageKey;
+	/** A page that exists in every language: drives canonical, hreflang and the language switch. */
+	page?: PageKey;
+	/** A page that exists in one language only (e.g. a knowledge-base article): its own path, no hreflang;
+	 *  the language switch then leads to the other language's home page. */
+	path?: string;
 	title?: string;
+	description?: string;
+	ogImage?: OgImage;
+	ogType?: 'website' | 'article';
 	/** Extra JSON-LD objects for this page. */
 	schema?: Record<string, unknown>[];
 }
 
-const { lang, page, schema = [] } = Astro.props;
+const { lang, page, path, schema = [], ogType = 'website' } = Astro.props;
 const t = ui[lang];
 const title = Astro.props.title ?? t.meta.title;
-const description = t.meta.description;
-const urlFor = (l: Lang) => new URL(routes[l][page], site.url).href;
+const description = Astro.props.description ?? t.meta.description;
+const og = Astro.props.ogImage ?? site.ogImage;
+const abs = (p: string) => new URL(p, site.url).href;
+const urlFor = (l: Lang) => abs(page ? routes[l][page] : l === lang ? (path ?? routes[l].home) : routes[l].home);
 const canonical = urlFor(lang);
+const switchHrefs = Object.fromEntries(
+	langs.map((l) => [l, page ? routes[l][page] : l === lang ? (path ?? routes[l].home) : routes[l].home]),
+) as Record<Lang, string>;
 
 const person = {
 	'@context': 'https://schema.org',
@@ -49,8 +67,9 @@ const person = {
 		<title>{title}</title>
 		<meta name="description" content={description} />
 		<link rel="canonical" href={canonical} />
-		{langs.map((l) => <link rel="alternate" hreflang={l} href={urlFor(l)} />)}
-		<link rel="alternate" hreflang="x-default" href={urlFor('pl')} />
+		{page && langs.map((l) => <link rel="alternate" hreflang={l} href={urlFor(l)} />)}
+		{page && <link rel="alternate" hreflang="x-default" href={urlFor('pl')} />}
+		<link rel="alternate" type="application/rss+xml" title="Baza wiedzy – Wojciech Czekała" href="/baza-wiedzy/rss.xml" />
 		<meta name="theme-color" content="#edebe4" />
 
 		<link rel="icon" href="/favicon.ico" sizes="any" />
@@ -60,21 +79,22 @@ const person = {
 		<link rel="manifest" href="/site.webmanifest" />
 		<link rel="sitemap" href="/sitemap.xml" />
 
-		<meta property="og:type" content="website" />
+		<meta property="og:type" content={ogType} />
 		<meta property="og:locale" content={t.ogLocale} />
-		{langs.filter((l) => l !== lang).map((l) => <meta property="og:locale:alternate" content={ui[l].ogLocale} />)}
+		{page && langs.filter((l) => l !== lang).map((l) => <meta property="og:locale:alternate" content={ui[l].ogLocale} />)}
 		<meta property="og:site_name" content={site.name} />
 		<meta property="og:url" content={canonical} />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
-		<meta property="og:image" content={site.ogImage.url} />
-		<meta property="og:image:width" content={String(site.ogImage.width)} />
-		<meta property="og:image:height" content={String(site.ogImage.height)} />
-		<meta property="og:image:alt" content={site.ogImage.alt} />
+		<meta property="og:image" content={og.url} />
+		<meta property="og:image:width" content={String(og.width)} />
+		<meta property="og:image:height" content={String(og.height)} />
+		<meta property="og:image:alt" content={og.alt} />
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
-		<meta name="twitter:image" content={site.ogImage.url} />
+		<meta name="twitter:image" content={og.url} />
+		<slot name="head" />
 
 		<Font cssVariable="--font-newsreader" preload={[{ subset: 'latin', style: 'normal' }]} />
 		<Font cssVariable="--font-hanken" preload={[{ subset: 'latin' }]} />
@@ -93,7 +113,7 @@ const person = {
 			class="fixed top-2 left-2 z-100 -translate-y-[150%] rounded-md bg-ink px-[18px] py-3 text-paper no-underline transition-transform duration-160 ease-out focus-visible:translate-y-0"
 			href="#tresc">{t.ui.skip}</a
 		>
-		<Nav lang={lang} page={page} />
+		<Nav lang={lang} switchHrefs={switchHrefs} />
 		<main id="tresc">
 			<slot />
 		</main>

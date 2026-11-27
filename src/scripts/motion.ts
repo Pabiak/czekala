@@ -71,7 +71,7 @@ document.addEventListener('keydown', (e) => {
 		toggle?.focus();
 	}
 });
-matchMedia('(min-width: 768px)').addEventListener('change', (e) => {
+matchMedia('(min-width: 900px)').addEventListener('change', (e) => {
 	if (e.matches) setMenu(false);
 });
 

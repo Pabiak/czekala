@@ -11,7 +11,6 @@ The site is bilingual. Polish is at the root and English under `/en/` (`/en/`, `
 These must stay stable because they are live and indexed:
 - the URLs `/` and `/eko-slownik`,
 - the anchors `#o-mnie`, `#ekoslownik`, `#kontakt` (plus `#wspolpraca`, added later),
-- `public/blog/index.html` (redirect to blog.wojciechczekala.pl),
 - `public/czekala1.jpg` (the OG image URL),
 - the contact data.
 
@@ -38,7 +37,15 @@ The package manager is **pnpm**, and the project needs Node `>=22.23.4`. There i
   - the PL/EN switch in `Nav`, which links to the same page in the other language.
 
   Pages pass extra JSON-LD through the `schema` prop.
-- **Sitemap:** `public/sitemap.xml` is hand-written. Update it when you add pages.
+- **Baza wiedzy (knowledge base):** this is the former blog. It is Polish only, at `/baza-wiedzy` and `/baza-wiedzy/[slug]`, with `/baza-wiedzy/rss.xml`, and `/blog` redirects to it (`redirects` in `astro.config.mjs`). It is modelled on the client's reference, mikrobiotech.pl/baza-wiedzy: a flat list of articles, newest first.
+  - Articles are written by the client in Sanity Studio (`studio/`, its own package and `pnpm install`) and fetched at build time in `src/lib/sanity.ts`. The site stays fully static.
+  - The Sanity document type is still named `post`. Don't rename it, or existing articles disappear. Only the labels say "Artykuł".
+  - Images are served from Sanity's CDN. Portable Text is rendered by `@portabletext/to-html` and styled by the `prose-czekala` utility in `global.css` (Tailwind Typography).
+  - Configuration lives in `SANITY_PROJECT_ID` (`xc0vrkzl`) and `SANITY_DATASET` (`production`), see `.env.example`. Without them the production knowledge base is empty, and `astro dev` shows a dev-only sample article.
+  - Publishing an article needs a rebuild and deploy (planned: a Sanity webhook triggers GitHub Actions, which builds and uploads to OVH).
+- **Nav breakpoint:** the nav collapses into the dropdown menu below 900px (`max-ml:`), because five PL items don't fit at 768px.
+- **Language switch for one-language pages:** knowledge-base pages pass `path` instead of `page` to `Layout`, so they get no hreflang, and the language switch goes to the other language's home page.
+- **Sitemap:** `src/pages/sitemap.xml.ts` generates it at build time, including knowledge-base articles. Add new paired pages to its `paired` list.
 - **Styling:** Tailwind CSS v4 via `@tailwindcss/vite`, configured in CSS with no `tailwind.config`. Components use utility classes only; there are no scoped `<style>` blocks.
   - **Tokens:** defined in `@theme` in `src/styles/global.css`. They cover colors (`paper`, `ink`, `forest`, `moss`, `night`, `line`…), the type scale (`text-display`, `text-h2`, `text-big`, `text-stat`, `text-term`, `text-lead`, `text-label`), `ease-out` and the extra breakpoints `2xs` (360), `xs` (480) and `ml` (900).
   - **Layout variables:** `--gutter`, `--section-y` and `--nav-h` are plain `:root` variables, used as `py-(--section-y)`.
