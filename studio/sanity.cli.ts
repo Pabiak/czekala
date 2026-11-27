@@ -7,5 +7,5 @@ export default defineCliConfig({
 	},
 	// `pnpm deploy` publishes the editor at https://<studioHost>.sanity.studio
 	studioHost: process.env.SANITY_STUDIO_HOST ?? 'wojciechczekala',
-	deployment: { autoUpdates: true },
+	deployment: { appId: 'v2qxbr1sfy36f0hqxbahn9od', autoUpdates: true },
 });
